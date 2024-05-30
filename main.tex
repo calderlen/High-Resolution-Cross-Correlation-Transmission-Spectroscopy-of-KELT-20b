@@ -2,8 +2,6 @@
 
 % Packages you've added in
 \usepackage{subcaption}
-\usepackage{float} % Add the float package for additional float placement options
-\usepackage{natbib} % Add the natbib package to handle undefined citations
 
 \newcommand{\vdag}{(v)^\dagger}
 \newcommand\aastex{AAS\TeX}
@@ -115,23 +113,24 @@
         \subsection{Data Preparation}\label{subsec:Data Preparation}
             The following procedure is nearly identical to that of~\citep{Johnson2023} and~\citep{Petz2023}. First, we import the flux values for each spectrum recorded, then regrid the fluxes to common wavelength values for each spectrum. Next, we flatten both arms of the time-series spectra by subtracting off the median flux from each, yielding residual spectra with stellar lines and time-invariant telluric lines removed. Next, we remove systematics from the spectra. Our systematics correction method is unique in that it employs both the~\code{molecfit} package~\citep{Smette2015, Kausch2015} and a modified version of the \code{PySysRem}~\footnote{https://github.com/stephtdouglas/PySysRem} package that accepts PEPSI data.~\code{molecfit} corrects for tellurics by generating synthetic absorption lines specific to time and location of observation and removing them from obtained spectra. The SYSREM detrending algorithm~\citep{Tamuz2005} fits and removes systematic effects, with the number of systematics to correct for ($N_{\mathrm{Sys}}$) and the number of SYSREM iterations ($N_{\mathrm{Iter}}$) being the relevant input parameters. As determined in~\citet{Johnson2023}, applying both methods yields increased significance of retrieved signals than either alone. We first use~\code{molecfit} to fit and remove telluric lines in the red arm spectra only, as the blue arm is absent of significant tellurics~\citep{Smette2015}. Next, we apply SYSREM to the residual spectra, empirically determining the number of iterations to apply to the spectra, the amount which yields the greatest recovered SNR in each species, as shown in Table~\ref{tab:sysrem_and_vmr}.
 
-        \begin{table*}[ht]\label{tab:sysrem_and_vmr}
-            \centering
-            \begin{tabular}{lcccc}
-                \textbf{Species} & $\textbf{N}_{\mathrm{Sys},\text{Red}}$ (Non-telluric) & $\textbf{N}_{\mathrm{Sys},\text{Red}}$ (Telluric) & $\textbf{N}_{\mathrm{Sys},\text{Blue}}$ & VMR \\
-                \hline
+            \begin{deluxetable*}{lcccc}
+                \tablecaption{Shows the optimal SYSREM iterations, $N_{\mathrm{Sys}}$, for systematics reduction for each species meeting the tentative detection threshold. We bin the telluric and non-telluric contaminated wavelength regions, finding the best $N_{\mathrm{Sys}}$ for each. Note that the blue arm does not contain any tellurics, so it only contains one $N_{\mathrm{Sys}}$ parameter, for non-telluric regions.\label{tab:sysrem_and_vmr}}
+                \tablehead{
+                    \colhead{\textbf{Species}} & 
+                    \colhead{$\textbf{N}_{\mathrm{Sys},\text{Red}}$ (Non-telluric)} & 
+                    \colhead{$\textbf{N}_{\mathrm{Sys},\text{Red}}$ (Telluric)} & 
+                    \colhead{$\textbf{N}_{\mathrm{Sys},\text{Blue}}$} & 
+                    \colhead{VMR}
+                }
+                \startdata
                 Fe I & 5 & 5 & 6 & $5.39 \times 10^{-5}$ \\        
                 Fe II & 5 & 5 & 5 & $5.39 \times 10^{-5}$ \\
                 Na I & 0 & 10 & 2 & $2.94 \times 10^{-6}$ \\
                 Co I & 0 & 10 & 5 & $1.67 \times 10^{-7}$ \\
                 V I & 2 & 5 & 8 & $5.62 \times 10^{-9}$ \\
                 Ca I & 0 & 10 & 5 & $2.10 \times 10^{-8}$ \\
-            \end{tabular}
-            
-            \caption{Shows the optimal SYSREM iterations, $N_{\mathrm{Sys}}$, for systematics reduction for each species meeting the tentative detection threshold. We bin the telluric and non-telluric contaminated wavelength regions, finding the best $N_{\mathrm{Sys}}$ for each. Note that the blue arm does not contain any tellurics, so it only contains one $N_{\mathrm{Sys}}$ parameter, for non-telluric regions.}
-            
-
-        \end{table*}
+                \enddata
+            \end{deluxetable*}
 
         \subsection{Cross-correlation}
             With data preparation complete, we cross-correlate model and observed spectra in the stellar rest frame, with the same procedure as described in~\citet{Johnson2023}. To find the peak SNR of each spectrum in our dataset, we divided the flux values by their corresponding error values, then selected the 90th percentile value. We compute per-spectrum CCF weights by regridding the Doppler shift-corrected spectra wavelengths to the template wave wavelengths, then multiplying the per-spectrum SNR with the difference between the maximum flux value of the regridded template spectrum and the flux values of the regridded template itself. The cross-correlation procedure is adapted from the BANZAI-NRES package~\citep{McCully2022}. With each spectrum cross-correlated, we then interpolate the cross-correlation function and its uncertainty for the given radial velocity shift corresponding to $K_p$. We sum over all spectra, multiplying each by its corresponding CCF weight, then median subtract. Finally, we standardized the now-combined CCF amplitude with the metric of the detection strength being the standard deviation of the CCF at $|v_{sys}| > 100 km/s$.
@@ -171,125 +170,112 @@
             
     \section{Results}\label{sec:Results}
             
-        \begin{table*}\label{tab:results-summary}
-            \centering
-            \caption{Comparative analysis of detected and tentatively detected species across different studies, including new findings.}
-            
-            {\footnotesize % Slightly reduce the font size
-            \setlength\tabcolsep{4pt} % Adjust the spacing between columns to be tighter
-            \begin{tabular}{lcccc}
-                \hline
-                & Species & SNR & $V_{sys}$ & $(K_p)$ \\
-                \hline
-                \textbf{This Work} & Fe I & 10.16 & -0.81 & 188 \\
-                & Fe II & 18.73 & 0.72 & 163 \\
-                & Na I & 3.00 & 3.75 & 211 \\
-                & Co I & 2.94 & -1.99 & 110 \\
-                & V I & 3.13 & -3.79 & 220 \\
-                \citep{CasasayasBarris2020} & Fe II & --- & -2.8 $\pm$ 0.8 & --- \\
-                & Na I & --- & -3.1 $\pm$ 0.9 & --- \\
-                & $H_{\alpha}$ & --- & -3.0 $\pm$ 1.2 & --- \\
-                \citep{Hoeijmakers2020} & Na I & --- & -3.2 $\pm$ 0.7 & --- \\
-                & $H_{\alpha}$ & --- & -4.5 $\pm$ 0.5 & --- \\
-                \citep{Nugroho2020} & Fe I (3000K) & 14.30 & -3.6  $\pm$ 0.3 & 200.1 $\pm$ 5.2 \\
-                & Fe II (3000K) & 14.61 & -1.4 $\pm$ 0.2 & 165.0 $\pm$ 3.5 \\
-                & Na I D (3000K) & 7.72 & -1.4 $\pm$ 0.7 & 180.0 $\pm$ 11.8 \\
-                \citep{Kasper2022} & --- & 5.4 & $2.0^{+2.0}_{-2.0}$ & $173.0^{+6.5}_{-5.0}$ \\
-                \citep{Sicilia2022} & $H_{\alpha}$ & --- & $-5.2^{+1.8}_{-1.7}$ & $156.3^{+28.5}_{-27.0}$ \\
-                & Na I D_1 & --- & $-3.8^{+0.7}_{-0.7}$ & $192.5^{+12.4}_{-13.5}$ \\
-                & Na I D_2 & --- & $-3.7^{+0.9}_{-0.9}$ & $170.0^{+14.9}_{-13.5}$ \\
-                \citep{BelloArufe2022} & Fe II & 5.3 & -20$^{+2}_{-6}$ & 120$^{+78}_{-46}$ \\
-                
-                \hline
-
-            \end{tabular}}
-            
-        \end{table*}
+        \begin{deluxetable*}{lcccc}
+            \tablecaption{Comparative analysis of detected and tentatively detected species across different studies, including new findings.\label{tab:results-summary}}
+            \tablehead{
+                \colhead{} & 
+                \colhead{Species} & 
+                \colhead{SNR} & 
+                \colhead{$V_{sys}$} & 
+                \colhead{$(K_p)$}
+            }
+            \startdata
+            \textbf{This Work} & Fe I & 10.16 & -0.81 & 188 \\
+            & Fe II & 18.73 & 0.72 & 163 \\
+            & Na I & 3.00 & 3.75 & 211 \\
+            & Co I & 2.94 & -1.99 & 110 \\
+            & V I & 3.13 & -3.79 & 220 \\
+            \citep{CasasayasBarris2020} & Fe II & --- & -2.8 $\pm$ 0.8 & --- \\
+            & Na I & --- & -3.1 $\pm$ 0.9 & --- \\
+            & $H_{\alpha}$ & --- & -3.0 $\pm$ 1.2 & --- \\
+            \citep{Hoeijmakers2020} & Na I & --- & -3.2 $\pm$ 0.7 & --- \\
+            & $H_{\alpha}$ & --- & -4.5 $\pm$ 0.5 & --- \\
+            \citep{Nugroho2020} & Fe I (3000K) & 14.30 & -3.6  $\pm$ 0.3 & 200.1 $\pm$ 5.2 \\
+            & Fe II (3000K) & 14.61 & -1.4 $\pm$ 0.2 & 165.0 $\pm$ 3.5 \\
+            & Na I D (3000K) & 7.72 & -1.4 $\pm$ 0.7 & 180.0 $\pm$ 11.8 \\
+            \citep{Kasper2022} & --- & 5.4 & $2.0^{+2.0}_{-2.0}$ & $173.0^{+6.5}_{-5.0}$ \\
+            \citep{Sicilia2022} & $H_{\alpha}$ & --- & $-5.2^{+1.8}_{-1.7}$ & $156.3^{+28.5}_{-27.0}$ \\
+            & Na I D_1 & --- & $-3.8^{+0.7}_{-0.7}$ & $192.5^{+12.4}_{-13.5}$ \\
+            & Na I D_2 & --- & $-3.7^{+0.9}_{-0.9}$ & $170.0^{+14.9}_{-13.5}$ \\
+            \citep{BelloArufe2022} & Fe II & 5.3 & -20$^{+2}_{-6}$ & 120$^{+78}_{-46}$ \\
+            \enddata
+        \end{deluxetable*}
 
         \begin{figure*}[ht!]
             % Row 1
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:2d-ccf-Fe-combined}
                 \includegraphics[width=\textwidth]{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Fe.CCFs-shifted.pdf}
-                
             \end{subfigure}
+            
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:1d-ccf-Fe-combined}
                 \includegraphics[width=\textwidth]{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Fe.SNR-Gaussian.pdf}
-                
             \end{subfigure}
+
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:wind-chars-Fe-combined}
                 \includegraphics[width=\textwidth]{plots-updated/line-velocity/binned/pcolor/points/KELT-20b.Fe.phase-binned+RVs.pdf}
-                
             \end{subfigure}
 
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:2d-ccf-Fe+-combined}
                 \includegraphics[width=\textwidth]{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Fe+.CCFs-shifted.pdf}
-                
             \end{subfigure}
+
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:1d-ccf-Fe+-combined}
                 \includegraphics[width=\textwidth]{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Fe+.SNR-Gaussian.pdf}
-                
             \end{subfigure}
+
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:wind-chars-Fe+-combined}
                 \includegraphics[width=\textwidth]{plots-updated/line-velocity/binned/pcolor/points/KELT-20b.Fe+.phase-binned+RVs.pdf}
-                
             \end{subfigure}
 
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:2d-ccf-Na-combined}
                 \includegraphics[width=\textwidth]{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Na.CCFs-shifted.pdf}
-                
             \end{subfigure}
+
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:1d-ccf-Na-combined}
                 \includegraphics[width=\textwidth]{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Na.SNR-Gaussian.pdf}
-                
             \end{subfigure}
+
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:wind-chars-Na-combined}
                 \includegraphics[width=\textwidth]{plots-updated/line-velocity/binned/pcolor/points/KELT-20b.Na.phase-binned+RVs.pdf}
-                
             \end{subfigure}
 
         \end{figure*}
         
         \begin{figure*}[ht!]\label{fig:main-CCFs}
-            \ContinuedFloat%
-
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:2d-ccf-Co-combined}
                 \includegraphics[width=\textwidth]{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Co.CCFs-shifted.pdf}
-                
             \end{subfigure}
+
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:1d-ccf-Co-combined}
                 \includegraphics[width=\textwidth]{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Co.SNR-Gaussian.pdf}
-                
             \end{subfigure}
+
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:wind-chars-Co-combined}
                 \includegraphics[width=\textwidth]{plots-updated/line-velocity/binned/pcolor/points/KELT-20b.Co.phase-binned+RVs.pdf}
-                
             \end{subfigure}
 
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:2d-ccf-V-combined}
                 \includegraphics[width=\textwidth]{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.V.CCFs-shifted.pdf}
-                
             \end{subfigure}
+
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:1d-ccf-V-combined}
                 \includegraphics[width=\textwidth]{plots-updated/line-profile/blue/KELT-20b.20190504.blue.V.SNR-Gaussian.pdf}
-                
             \end{subfigure}
     
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:2d-ccf-Ca-combined}
                 \includegraphics[width=\textwidth]{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Ca.CCFs-shifted.pdf}
-                
             \end{subfigure}
+
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:1d-ccf-Ca-combined}
                 \includegraphics[width=\textwidth]{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Ca.SNR-Gaussian.pdf}
-                
             \end{subfigure}
 
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:2d-ccf-Mn-combined}
                 \includegraphics[width=\textwidth]{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Mn.CCFs-shifted.pdf}
-                
             \end{subfigure}
+
             \begin{subfigure}[b]{0.333\textwidth}\label{fig:1d-ccf-Mn-combined}
                 \includegraphics[width=\textwidth]{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Mn.SNR-Gaussian.pdf}
-                
             \end{subfigure}
 
 
@@ -315,19 +301,6 @@
             
             %Similar to the results in~\citep{Stangret2020}, we find a significant offset in $v_{sys}$ of Fe I and Fe II, suggesting we are probing different pressures in the atmosphere. Fe I's line velocity magnitude is greater than Fe II's across the entire transit, with a net blueshift with phase occurring in each species. As in~\citep{Stangret2020}, this result contradicts the discussion in~\citep{Gibson2020} and~\citep{Sing2019}.
 
-            
-        \begin{figure}[]\label{fig:FeI-II-Offset}
-            \includegraphics[width=0.45\textwidth]{plots/combined-phase-binned+RVs/KELT-20b.inverted-transmission-better.FeIFeII.CombinedWindCharacteristics_Combined.pdf}
-            \caption{Phase-resolved Doppler shifts, or line profiles, of Fe I and Fe II during transit.}
-            
-        \end{figure}
-        
-        \begin{figure}[]\label{fig:VICaINaICoI-WindChars}
-            \includegraphics[width=0.45\textwidth]{plots/combined-phase-binned+RVs/KELT-20b.inverted-transmission-better.VICaINaICoI.CombinedWindCharacteristics_Combined.pdf}
-            \caption{Phase-resolved Doppler shifts, or line profiles, of V I, Ca I, Na I, and Co I.}
-            
-        \end{figure}
-        
         \begin{figure}[]\label{fig:combined-species-snr} 
             \includegraphics[width=0.45\textwidth]{plots/combined-species-snr/KELT-20b.inverted-transmission-better.CombinedSpeciesSNRs.pdf}
             \caption{The net Doppler shifts of each detected species, ordered and colored by their peak detection SNR.}
