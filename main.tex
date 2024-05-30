@@ -2,6 +2,7 @@
 
 % Packages you've added in
 \usepackage{subcaption}
+\usepackage{booktabs}
 
 \newcommand{\vdag}{(v)^\dagger}
 \newcommand\aastex{AAS\TeX}
@@ -82,29 +83,29 @@
                     \colhead{\textbf{Description}} & \colhead{\textbf{Parameter}} & \colhead{\textbf{Value}} & \colhead{\textbf{Source}}
                 }
                 \startdata
-                \multicolumn{4}{c}{\textbf{Planetary Parameters}} \\
-                \midrule
-                Planet Radius & $R_P$ ($R_{\oplus}$) & 19.51 & 1 \\
-                Planet Mass & $M_P$ ($M_{\oplus}$) & 1072 & 1 \\
-                Equilibrium Temperature & $T_{\text{eq}}$ (K) & 2262 1 \\
-                Orbital Period & $P$ (d) & 3.4741085 & 1 \\
-                Epoch of Mid-Transit & $T_0$ (BJD\_TDB) & 2457485.74965 & 1 \\
-                Planetary Radial Velocity Semi-amplitude & $K_p$ (km s$^{-1}$) & $169 \pm 6$ & 1 \\
-                Systemic Velocity & $v_{\text{sys}}$ (km s$^{-1}$) & $-26.0$ & 2 \\
-                Projected Equatorial Rotational Velocity & $v \sin i_P$ (km s$^{-1}$) & 2.5 & 1 \\
-                Infrared Opacity & $\kappa_{\text{IR}}$ & 0.04 & 2 \\
-                Ratio of Optical to Infrared Opacities & $\gamma$ & 30 & 2 \\
-                Reference Pressure & $P_0$ (bar) & 1 & 2 \\
-                Atmospheric Abundance of H & $X_{\text{H}_2}$ & 0.7496 & 2 \\
-                Atmospheric Abundance of He & $X_{\text{He}}$ & 0.2504 & 2 \\
-                Volume Mixing Ratio of H$^-$ & VMR (H$^-$) & $1 \times 10^{-9}$ & 2 \\
-                \midrule
-                \multicolumn{4}{c}{\textbf{Stellar Parameters}} \\
-                \midrule
-                Stellar Radius & $R_{\ast}$ (Re) & 1.565 & 1 \\
-                Stellar Mass & $M_{\ast}$ (Me) & 1.76 & 1 \\
-                Stellar Effective Temperature & $T_{\text{eff}}$ (K) & 8720 & 1 \\
-                Metallicity & $[$Fe/H$]$ & $-0.29$ & 1 \\
+                    \multicolumn{4}{c}{\textbf{Planetary Parameters}} \\
+                    \midrule
+                    Planet Radius & $R_P$ ($R_{\oplus}$) & 19.51 & 1 \\
+                    Planet Mass & $M_P$ ($M_{\oplus}$) & 1072 & 1 \\
+                    Equilibrium Temperature & $T_{\text{eq}}$ (K) & 2262 1 \\
+                    Orbital Period & $P$ (d) & 3.4741085 & 1 \\
+                    Epoch of Mid-Transit & $T_0$ (BJD\_TDB) & 2457485.74965 & 1 \\
+                    Planetary Radial Velocity Semi-amplitude & $K_p$ (km s$^{-1}$) & $169 \pm 6$ & 1 \\
+                    Systemic Velocity & $v_{\text{sys}}$ (km s$^{-1}$) & $-26.0$ & 2 \\
+                    Projected Equatorial Rotational Velocity & $v \sin i_P$ (km s$^{-1}$) & 2.5 & 1 \\
+                    Infrared Opacity & $\kappa_{\text{IR}}$ & 0.04 & 2 \\
+                    Ratio of Optical to Infrared Opacities & $\gamma$ & 30 & 2 \\
+                    Reference Pressure & $P_0$ (bar) & 1 & 2 \\
+                    Atmospheric Abundance of H & $X_{\text{H}_2}$ & 0.7496 & 2 \\
+                    Atmospheric Abundance of He & $X_{\text{He}}$ & 0.2504 & 2 \\
+                    Volume Mixing Ratio of H$^-$ & VMR (H$^-$) & $1 \times 10^{-9}$ & 2 \\
+                    \midrule
+                    \multicolumn{4}{c}{\textbf{Stellar Parameters}} \\
+                    \midrule
+                    Stellar Radius & $R_{\ast}$ (Re) & 1.565 & 1 \\
+                    Stellar Mass & $M_{\ast}$ (Me) & 1.76 & 1 \\
+                    Stellar Effective Temperature & $T_{\text{eff}}$ (K) & 8720 & 1 \\
+                    Metallicity & $[$Fe/H$]$ & $-0.29$ & 1 \\
                 \enddata
             \end{deluxetable*}
             
@@ -135,7 +136,7 @@
         \subsection{Cross-correlation}
             With data preparation complete, we cross-correlate model and observed spectra in the stellar rest frame, with the same procedure as described in~\citet{Johnson2023}. To find the peak SNR of each spectrum in our dataset, we divided the flux values by their corresponding error values, then selected the 90th percentile value. We compute per-spectrum CCF weights by regridding the Doppler shift-corrected spectra wavelengths to the template wave wavelengths, then multiplying the per-spectrum SNR with the difference between the maximum flux value of the regridded template spectrum and the flux values of the regridded template itself. The cross-correlation procedure is adapted from the BANZAI-NRES package~\citep{McCully2022}. With each spectrum cross-correlated, we then interpolate the cross-correlation function and its uncertainty for the given radial velocity shift corresponding to $K_p$. We sum over all spectra, multiplying each by its corresponding CCF weight, then median subtract. Finally, we standardized the now-combined CCF amplitude with the metric of the detection strength being the standard deviation of the CCF at $|v_{sys}| > 100 km/s$.
             
-            Next, we shift the CCFs into the planetary rest frame and stack the red and blue arm CCFs separately. With a ${K_p-v_{sys}}$ map generated, we search for a CCF peak over a grid of $K_p$ values ranging from $50-350$ kms$^{-1}$ in steps of $1.0$ kms$^{-1}$. These maps are shown for each species within and exceeding the ${3\sigma}-{5\sigma}$ tentative detection window in Figure~\ref{fig:main-CCFs}. The VMRs for species meeting or exceeding the tentative detection window are shown in Table 1, as computed with the methodology described in Section~\ref{subsec:Model Spectra}.
+            Next, we shift the CCFs into the planetary rest frame and stack the red and blue arm CCFs separately. With a ${K_p-v_{sys}}$ map generated, we search for a CCF peak over a grid of $K_p$ values ranging from $50-350$ kms$^{-1}$ in steps of $1.0$ kms$^{-1}$. These maps are shown for each species within and exceeding the ${3\sigma}-{5\sigma}$ tentative detection window in Figure~\ref{fig:line-profle-overlaid-arms}. The VMRs for species meeting or exceeding the tentative detection window are shown in Table 1, as computed with the methodology described in Section~\ref{subsec:Model Spectra}.
 
         \subsection{Doppler Shadow Removal}
             As the planet crosses the stellar disk, the disk-integrated rotationally-broadened stellar absorption lines are deformed, a phenomenon known as the Rossiter-McLaughlin (RM) effect. When dividing each in-transit spectra by the out-of-transit spectra to isolate the atmospheric signal, the deformed lines cause an artifact on the CCF at the radial velocity corresponding to to the stellar disk being blocked by the transiting planet at the time of exposure, referred to as the Doppler shadow. We must correct for this obfuscation of the planetary signal in the CCF, as it decreases the recovered SNR and can alter the calculated radial velocity of each detection. KELT-20b's orbit is well-aligned ($\lambda = 3.4 \pm 2.1 ^{\circ}$) with its fast-rotating host star's projected-spin axis~\citep{Lund2017}, causing a strong RM effect. We correct for the RM effect using a Doppler shadow model, described in detail in~\citep{Johnson2016} and further discussed in~\citep{Johnson2014, Johnson2017}. In brief, we begin by dividing the stellar disk into a surface elements defined by $n \times n$ Cartesian grid, finding the fraction of each exposure time that grid spaces are obscured or partially obscured. We assume solid body rotation and a Gaussian profile in each surface element, scaled by a quadratic limb darkening coefficient. We also neglect the broadening effects of macroturbulence and gravity darkening~\citet{Johnson2016}. We scale the line profile contribution by each obscured surface element by this fraction, then convolve the line profiles with the instrumental line profile, a Gaussian. Finally, we subtract the line profile by the out-of-transit line profile, yielding the time-series CCF contribution from only the transiting planet, the Doppler Shadow. Our model outputs a normalized line profile, so we must rescale the model to match the CCF amplitudes. We run a grid search with the the Doppler shadow model scaling as the free parameter, with root-mean-square error as the goodness-of-fit metric. We select the best fit scaled Doppler shadow model, then subtract it from the CCFs. Finally, we again mean subtract and normalize each CCF, then combine arms into a single set of CCFs.
@@ -376,7 +377,7 @@
     \bibliographystyle{aasjournal}
 
     \appendix  
-        \section{Model transmission spectra}
+        \section{Model transmission spectra}\label{fig:main-spectra}
             \begin{figure*}[ht!]
                 \centering
                 \begin{subfigure}[b]{0.3\textwidth}\label{fig:Fe-spectrum}
@@ -408,7 +409,7 @@
                     \centering
                     \includegraphics[width=\textwidth]{plots/spectra/spectrum.KELT-20b.Ca.2.101e-08.inverted-transmission-better.pdf}
                     
-                \end{subfigure}\label{fig:main-spectra}
+                \end{subfigure}
                 % Add additional subfigures as needed
                 \caption{Model transmission spectra generated by \code{petitRADTRANS}, with the wavelengths covered by PEPSI's arms shown in blue and red, respectively.}
                 
