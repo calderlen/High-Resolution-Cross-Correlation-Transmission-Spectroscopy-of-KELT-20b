@@ -1,7 +1,7 @@
 \documentclass[twocolumn]{aastex631}
 
 % Packages you've added in
-\usepackage{subcaption}
+
 \usepackage{booktabs}
 \usepackage{graphicx}
 
@@ -48,11 +48,11 @@
 
     \section{Introduction}\label{sec:intro}
 
-        High-resolution cross-correlation transmission spectroscopy (HRCCTS) of KELT-20b began with detection of Na I and H$\alpha$ with a single HARPS-N observation \citep{CasasayasBarris2018}. This was followed by \citet{CasasayasBarris2019}'s combination of three HARPS-N and one CARMENES observation to detect Ca II IR Triplet, Fe II, Mg I (tentatively), H$\beta$, and H$\gamma$. \citet{Stangret2020} used three HARPS-N observations, confirming Fe II and finding Fe I. \citet{Nugroho2020} also utilized three HARPS-N and one CARMENES observation, confirming Fe I, Fe II, Na I D, and the Ca II IR Triplet, and finding Ca II H&K. \citet{Hoeijmakers2020} used a single EXPRES observation to confirm Fe I, Fe II, Na I, and detect Mg I and Cr II.
+        High-resolution cross-correlation transmission spectroscopy (HRCCTS) of KELT-20b began with detection of Na I and H$\alpha$ with a single HARPS-N observation \citep{CasasayasBarris2018}. This was followed by \citet{CasasayasBarris2019}'s combination of three HARPS-N and one CARMENES observation to detect Ca II IR Triplet, Fe II, Mg I (tentatively), H$\beta$, and H$\gamma$. \citet{Stangret2020} used three HARPS-N observations, confirming Fe II and finding Fe I. \citet{Nugroho2020} also utilized three HARPS-N and one CARMENES observation, confirming Fe I, Fe II, Na I D, and the Ca II IR Triplet, and finding Ca II H\&K. \citet{Hoeijmakers2020} used a single EXPRES observation to confirm Fe I, Fe II, Na I, and detect Mg I and Cr II.
 
 
     \section{Observations}\label{sec:Observations}
-        We obtained our data with the Potsdam Echelle Polarimetric and Spectroscopic Instrument (PEPSI)\citep{Strassmeier2015} on the Large Binocular Telescope (LBT). We utilized the PEPSI CD III+V bandpass, with wavelength coverage of 4800--5441\AA\ and 6278--7419\AA\, henceforth referred to the blue arm and arm respectively, with resolution ${\mathcal{R} = 130000}$. We list the key observation parameters in Table~\ref{tab:observation_details}.  %perhaps inlcude note about how many of the 23 spectra were in-transit vs out of transit
+        We obtained our data with the Potsdam Echelle Polarimetric and Spectroscopic Instrument (PEPSI)\citep{Strassmeier2015} on the Large Binocular Telescope (LBT). We utilized the PEPSI 5 III+V bandpass, with wavelength coverage of 4800--5441\AA\ and 6278--7419\AA\, henceforth referred to the blue arm and arm respectively, with resolution ${\mathcal{R} = 130000}$. We list the key observation parameters in Table~\ref{tab:observation_details}.  %perhaps inlcude note about how many of the 23 spectra were in-transit vs out of transit
         We reduced this observation using the Spectroscopic Data Systems (SDS) Pipeline.
 
         \begin{deluxetable}{lc}
@@ -79,38 +79,38 @@
             We calculate volume mixing ratios (VMRs) for each species using the \code{PyFastChem} equilibrium chemistry model~\citep{Stock2018, Stock2022, Kitzmann2023}, assuming solar abundances~\citep{Asplund2021} and the aforementioned P-T profile. We assume that quenching, the mechanism by which atmospheric abundances diverge from those predicted by chemical equilibrium at a certain pressure, occurs at 1 bar. Thus, we approximate each species' VMR as equal to its maximum VMR at 1 bar, calculated by \code{PyFastChem}~\citep{Johnson2023,Petz2023}. We also set the VMRs of ionized species equal to those of their neutral counterparts to simplify our analysis. Opacities were sourced from the~\code{petitRADTRANS} database, with missing entries supplemented from the DACE Opacity Database\footnote{\url{https://dace.unige.ch/opacityDatabase/}}, converted to \code{petitRADTRANS}-compatible format (P. Mollière, private communication).~\code{peitRADTRANS} sources its atomic opacities from the Kurucz line list, and we ensured the DACE opacities---Na I and Co I---came from the same line list.~\footnote{\url{http://kurucz.harvard.edu/}}
         
             \begin{deluxetable*}{l l c c}
-                \tablecaption{This table summarizes the planetary and stellar parameters relevant to our analysis. Sources: 1:~\citet{Lund2017}; 2:~\citet{Johnson2023}.\label{tab:parameters_summary}}
+                \tablecaption{This table summarizes the planetary and stellar parameters relevant to our analysis. Sources: a:~\citet{Lund2017}; b:~\citet{Johnson2023}.\label{tab:parameters_summary}}
                 \tablehead{
                     \colhead{\textbf{Description}} & \colhead{\textbf{Parameter}} & \colhead{\textbf{Value}} & \colhead{\textbf{Source}}
                 }
                 \startdata
                     \multicolumn{4}{c}{\textbf{Planetary Parameters}} \\
                     \midrule
-                    Planet Radius & $R_P$ ($R_{\oplus}$) & 19.51 & 1 \\
-                    Planet Mass & $M_P$ ($M_{\oplus}$) & 1072 & 1 \\
-                    Equilibrium Temperature & $T_{\text{eq}}$ (K) & 2262 1 \\
-                    Orbital Period & $P$ (d) & 3.4741085 & 1 \\
-                    Epoch of Mid-Transit & $T_0$ (BJD\_TDB) & 2457485.74965 & 1 \\
-                    Planetary Radial Velocity Semi-amplitude & $K_p$ (km s$^{-1}$) & $169 \pm 6$ & 1 \\
-                    Systemic Velocity & $v_{\text{sys}}$ (km s$^{-1}$) & $-26.0$ & 2 \\
-                    Projected Equatorial Rotational Velocity & $v \sin i_P$ (km s$^{-1}$) & 2.5 & 1 \\
-                    Infrared Opacity & $\kappa_{\text{IR}}$ & 0.04 & 2 \\
-                    Ratio of Optical to Infrared Opacities & $\gamma$ & 30 & 2 \\
-                    Reference Pressure & $P_0$ (bar) & 1 & 2 \\
-                    Atmospheric Abundance of H & $X_{\text{H}_2}$ & 0.7496 & 2 \\
-                    Atmospheric Abundance of He & $X_{\text{He}}$ & 0.2504 & 2 \\
-                    Volume Mixing Ratio of H$^-$ & VMR (H$^-$) & $1 \times 10^{-9}$ & 2 \\
+                    Planet Radius & $R_P$ ($R_{\oplus}$) & 19.51 &a\\
+                    Planet Mass & $M_P$ ($M_{\oplus}$) & 1072 &a\\
+                    Equilibrium Temperature & $T_{\text{eq}}$ (K) & 2262 &a\\
+                    Orbital Period & $P$ (d) & 3.4741085 &a\\
+                    Epoch of Mid-Transit & $T_0$ (BJD\_TDB) & 2457485.74965 &a\\
+                    Planetary Radial Velocity Semi-amplitude & $K_p$ (km s$^{-1}$) & $169 \pm 6$ &a\\
+                    Systemic Velocity & $v_{\text{sys}}$ (km s$^{-1}$) & $-26.0$ &b\\
+                    Projected Equatorial Rotational Velocity & $v \sin i_P$ (km s$^{-1}$) & 2.5 &a\\
+                    Infrared Opacity & $\kappa_{\text{IR}}$ & 0.04 &b\\
+                    Ratio of Optical to Infrared Opacities & $\gamma$ & 30 &b\\
+                    Reference Pressure & $P_0$ (bar) &a&b\\
+                    Atmospheric Abundance of H & $X_{\text{H}_2}$ & 0.7496 &b\\
+                    Atmospheric Abundance of He & $X_{\text{He}}$ & 0.2504 &b\\
+                    Volume Mixing Ratio of H$^-$ & VMR (H$^-$) & $1 \times 10^{-9}$ &b\\
                     \midrule
                     \multicolumn{4}{c}{\textbf{Stellar Parameters}} \\
                     \midrule
-                    Stellar Radius & $R_{\ast}$ (Re) & 1.565 & 1 \\
-                    Stellar Mass & $M_{\ast}$ (Me) & 1.76 & 1 \\
-                    Stellar Effective Temperature & $T_{\text{eff}}$ (K) & 8720 & 1 \\
-                    Metallicity & $[$Fe/H$]$ & $-0.29$ & 1 \\
+                    Stellar Radius & $R_{\ast}$ (Re) & 1.565 &a\\
+                    Stellar Mass & $M_{\ast}$ (Me) & 1.76 &a\\
+                    Stellar Effective Temperature & $T_{\text{eff}}$ (K) & 8720 &a\\
+                    Metallicity & $[$Fe/H$]$ & $-0.29$ &a\\
                 \enddata
             \end{deluxetable*}
             
-            We analyzed species presented in three previous spectral surveys of UHJs, ESPRESSO observations of WASP-76b in~\citet{Kesseli2022}, HARPS-N observations of KELT-9b in~\citet{Hoeijmakers2019}, and PEPSI observations of this planet in~\citet{Petz2023}. Considering HARPS-N's bandpass is 3830--6900\AA \citep{Cosentino2012} and ESPRESSO's is 3782--7887\AA\~\citep{Pepe2021}, we concluded that these studies provide a comprehensive overview of potential atmospheric constituents for KELT-20b. Consequently, we focused our search on the species identified as observable in these analyses.
+            We analyzed species presented in three previous spectral surveys of UHJs, ESPRESSO observations of WASP-76b in~\citet{Kesseli2022}, HARPS-N observations of KELT-9b in~\citet{Hoeijmakers2019}, and PEPSI observations of this planet in~\citet{Petz2023}. Considering HARPS-N's bandpass is 3830--6900\AA~\citep{Cosentino2012} and ESPRESSO's is 3782--7887\AA~\citep{Pepe2021}, we concluded that these studies provide a comprehensive overview of potential atmospheric constituents for KELT-20b. Consequently, we focused our search on the species identified as observable in these analyses.
             
         \subsection{Data Preparation}\label{subsec:Data Preparation}
             The following procedure is nearly identical to that of \citet{Johnson2023} and \citet{Petz2023}. First, we import the flux values for each spectrum recorded, then regrid the fluxes to common wavelength values for each spectrum. Next, we flatten both arms of the time-series spectra by subtracting off the median flux from each, yielding residual spectra with stellar lines and time-invariant telluric lines removed. Next, we remove systematics from the spectra. Our systematics correction method is unique in that it employs both the~\code{molecfit} package~\citep{Smette2015, Kausch2015} and a modified version of the \code{PySysRem}~\footnote{https://github.com/stephtdouglas/PySysRem} package that accepts PEPSI data.~\code{molecfit} corrects for tellurics by generating synthetic absorption lines specific to time and location of observation and removing them from obtained spectra. The SYSREM detrending algorithm~\citep{Tamuz2005} fits and removes systematic effects, with the number of systematics to correct for ($N_{\mathrm{Sys}}$) and the number of SYSREM iterations ($N_{\mathrm{Iter}}$) being the relevant input parameters. As determined in~\citet{Johnson2023}, applying both methods yields increased significance of retrieved signals than either alone. We first use~\code{molecfit} to fit and remove telluric lines in the red arm spectra only, as the blue arm is absent of significant tellurics~\citep{Smette2015}. Next, we apply SYSREM to the residual spectra, empirically determining the number of iterations to apply to the spectra, the amount which yields the greatest recovered SNR in each species, as shown in Table~\ref{tab:sysrem_and_vmr}.
@@ -129,15 +129,15 @@
                 Fe I & 5 & 5 & 6 & $4.95 \times 10^{-5}$ \\ 
                 Fe II & 5 & 5 & 5 & $4.95 \times 10^{-5}$ \\
                 Na I & 0 & 10 & 2 & $2.82 \times 10^{-6}$ \\
-                Co I & 0 & 10 & 5 & $1.49 \times 10^{-7}$ \\
                 Cr I & 1 & 1 & 3 & $7.08 \times 10^{-7}$ \\
                 Cr II & 1 & 1 & 3 & $7.08 \times 10^{-7}$ \\
+                Co I & 0 & 10 & 5 & $1.49 \times 10^{-7}$ \\
                 Zn I & 1 & 1 & 3 & $6.23 \times 10^{-8}$ \\
-                Cu I & 1 & 1 & 3 & $2.06 \times 10^{-8}$ \\
                 Ca I & 0 & 10 & 5 & $2.10 \times 10^{-8}$ \\
+                Cu I & 1 & 1 & 3 & $2.06 \times 10^{-8}$ \\
                 Ti I & 1 & 1 & 3 & $5.63 \times 10^{-9}$ \\
                 Ti II & 1 & 1 & 3 & $5.63 \times 10^{-9}$ \\
-                Sc II & 1 & 1 & 3 & $5.63 \times 10^{-9}$ \\
+                Sc II & 1 & 1 & 3 & $2.37 \times 10^{-9}$ \\
                 Ru I & 1 & 1 & 3 & $9.65 \times 10^{-11}$ \\
                 \enddata
             \end{deluxetable*}
@@ -146,22 +146,15 @@
         \subsection{Doppler Shadow Removal}
             As the planet crosses the stellar disk, the disk-integrated rotationally-broadened stellar absorption lines are deformed, a phenomenon known as the Rossiter-McLaughlin (RM) effect. When dividing each in-transit spectra by the out-of-transit spectra to isolate the atmospheric signal, the deformed lines cause an artifact on the CCF at the radial velocity corresponding to the stellar disk being blocked by the transiting planet at the time of exposure, referred to as the Doppler shadow. We must correct for this obfuscation of the planetary signal in the CCF, as it decreases the recovered SNR and can alter the calculated radial velocity of each detection. KELT-20b's orbit is well-aligned ($\lambda = 3.4 \pm 2.1 ^{\circ}$) with its fast-rotating host star's projected-spin axis~\citep{Lund2017}, causing a strong RM effect. We correct for the RM effect using a Doppler shadow model, described in detail in~\citet{Johnson2016} and further discussed in~\citep{Johnson2014, Johnson2017}. In brief, we begin by dividing the stellar disk into a surface elements defined by $n \times n$ Cartesian grid, finding the fraction of each exposure time that grid spaces are obscured or partially obscured. We assume solid body rotation and a Gaussian line profile in each surface element, scaled by a quadratic limb darkening coefficient. We also neglect the broadening effects of macroturbulence and gravity darkening~\citet{Johnson2016}. We scale the line profile contribution by each obscured surface element by this fraction, then convolve the line profiles with the instrumental line profile, a Gaussian. Finally, we subtract the line profile by the out-of-transit line profile, yielding the time-series CCF contribution from only the transiting planet, the Doppler Shadow. Our model outputs a normalized line profile, so we must rescale the model to match the CCF amplitudes. We run a grid search with the the Doppler shadow model scaling as the free parameter, with root-mean-square error as the goodness-of-fit metric. We select the best fit scaled Doppler shadow model, then subtract it from the CCFs. Finally, we again mean subtract and normalize each CCF, then combine arms into a single set of CCFs.
             
-            \begin{figure*}[ht!]
+            \begin{figure}
                 \centering
-                \begin{minipage}[b]{0.45\textwidth}
-                    \centering
-                    \includegraphics[width=\textwidth]{plots/raw-ccf-before/KELT-20b.20190504.Fe.blue.CCFs-raw.pdf}
-                    \label{fig:raw-ccf-before-Fe-blue}
-                \end{minipage}
+                \includegraphics[width=0.45\textwidth]{plots/raw-ccf-before/KELT-20b.20190504.Fe.blue.CCFs-raw.pdf}
                 \hspace{0.05\textwidth}
-                \begin{minipage}[b]{0.45\textwidth}
-                    \centering
-                    \includegraphics[width=\textwidth]{plots/raw-ccf-after/KELT-20b.20190504.Fe.blue.CCFs-raw.pdf}
-                    \label{fig:raw-ccf-after-Fe-blue}
-                \end{minipage}
+                \includegraphics[width=0.45\textwidth]{plots/raw-ccf-after/KELT-20b.20190504.Fe.blue.CCFs-raw.pdf}
                 \caption{Removal of the Doppler shadow in the blue arm CCF of Fe I. \textit{Left panel}: CCF of in-transit exposures showing Doppler Shadow (dark streak) intersecting with the radial velocity signal (bright streak). \textit{Right panel}: Residual CCF after subtracting off the Doppler shadow.}
                 \label{fig:raw-CCFs}
-            \end{figure*}
+            \end{figure}
+            
             
             
         \subsection{Cross-correlation}
@@ -183,9 +176,9 @@
             % plots showing petitRADTRANS-generated model spectra for each species meeting tentative detection threshold
             
     \section{Results}\label{sec:Results}
-            
-        \begin{deluxetable*}{lccccccc}
-            \tablecaption{Comparative analysis of detected and tentatively detected species across different studies, including new findings. $N_{\text{obs}}$ signifies the number of transit observations. \label{tab:results-summary}}
+        
+        \begin{deluxetable*}{lcccccccc}
+            \tablecaption{Summary of results for different spectrographs.}
             \tablehead{
                 \colhead{} & 
                 \colhead{Spectrograph} & 
@@ -193,43 +186,52 @@
                 \colhead{$N_{\text{obs}}$} &
                 \colhead{Species} & 
                 \colhead{SNR} & 
-                \colhead{$V_{\text{sys}}$} & 
+                \colhead{$\Delta V$} & 
+                \colhead{FWHM} &
                 \colhead{$K_p$}
             }
             \startdata
-                \textbf{This Work} & PEPSI & Blue & 1  & Mg I         & 5.41  & 3.11    & 177   \\
-                                   &       & Combined &    & Fe I         & 10.16 & -0.81   & 188   \\
-                                   &       & Combined &    & Fe II        & 18.73 & 0.72    & 163   \\
-                                   &       & Combined &    & Na I         & 4.43  & 6.59    & 249   \\
-                                   &       & Blue     &    & Co I         & 3.70  & 0.93    & 123   \\
-                                   &       & Combined &    & Cr I         & 3.47  & -1.08   & 249   \\
-                                   &       & Blue     &    & Cr II        & 4.15  & 2.00    & 221   \\
-                                   &       & Blue     &    & Zn I         & 3.19  & 6.48    & 187   \\
-                                   &       & Blue     &    & Cu I         & 4.00  & 8.19    & 189   \\
-                                   &       & Blue     &    & Ca I         & 3.41  & 6.28    & 211   \\
-                                   &       & Blue     &    & Ti I         & 3.00  & -16.29  & 296   \\
-                                   &       & Blue     &    & Ti II        & 3.04  & 5.94    & 239   \\
-                                   &       & Blue     &    & Sc II        & 3.30  & 12.96   & 183   \\
-                                   &       & Blue     &    & Ru I         & 3.25  & -10.33  & 210   \\
-            \citet{CasasayasBarris2020} & HARPS-N, CARMENES & --- & 3, 1 & Fe II        & ---   & -2.8 $\pm$ 0.8  & ---   \\
-                                        &                    & --- &      & Na I         & ---   & -3.1 $\pm$ 0.9  & ---   \\
-                                        &                    & --- &      & $H_{\alpha}$ & ---   & -3.0 $\pm$ 1.2  & ---   \\
-            \citet{Hoeijmakers2020} & EXPRES & --- & 1 & Fe I         & 3.45  & -4.81 $\pm$ 0.72 & ---   \\
-                                    &        & --- &   & Fe II        & 4.60  & -0.75 $\pm$ 0.37 & ---   \\ 
-                                    &        & --- &   & Cr II        & 3.69  & -3.40 $\pm$ 0.42 & ---   \\
-                                    &        & --- &   & Na I         & 3.40  & -4.38 $\pm$ 0.54 & ---   \\
-                                    &        & --- &   & Mg I         & 3.33  & -8.40 $\pm$ 1.40 & ---   \\
-            \citet{Nugroho2020} & HARPS-N, CARMENES & --- & 3, 1 & Fe I   & 14.30 & -3.6  $\pm$ 0.3  & 200.1 $\pm$ 5.2   \\
-                                &                      & --- &      & Fe II & 14.61 & -1.4  $\pm$ 0.2  & 165.0 $\pm$ 3.5   \\
-                                &                      & --- &      & Na I D & 7.72  & -1.4  $\pm$ 0.7  & 180.0 $\pm$ 11.8  \\
-            \citet{Rainer2021} & HARPS-N & --- & 5 & Fe I         & ---   & $-4.7^{+0.3}_{-0.3}$ & $147^{+7}_{-6}$ \\
-            \citet{Langeveld2022} & HARPS-N & --- & 3 & Na I         & ---   & -3.1 $\pm$ 1.9   & ---   \\
-            \citet{Sicilia2022} & HARPS-N & --- & 3 & $H_{\alpha}$ & ---   & $-5.2^{+1.8}_{-1.7}$ & $156.3^{+28.5}_{-27.0}$ \\
-                                 &         & --- &   & Na I D$_1$  & ---   & $-3.8^{+0.7}_{-0.7}$ & $192.5^{+12.4}_{-13.5}$ \\
-                                 &         & --- &   & Na I D$_2$  & ---   & $-3.7^{+0.9}_{-0.9}$ & $170.0^{+14.9}_{-13.5}$ \\
+                \textbf{This Work} & PEPSI & Blue & 1 & Mg I & $5.41 \pm 0.36$ & $3.11 \pm 0.69$ & $21.35 \pm 1.62$ & $177$ \\
+                & & Combined & & Fe I & $7.09 \pm 0.56$ & $1.88 \pm 0.44$ & $11.37 \pm 1.05$ & $188$ \\
+                & & Combined & & Fe II & $12.48 \pm 0.73$ & $2.83 \pm 0.24$ & $8.56 \pm 0.57$ & $163$ \\
+                & & Combined & & Na I & $4.43 \pm 0.60$ & $6.59 \pm 0.53$ & $8.01 \pm 1.24$ & $249$ \\
+                & & Combined & & Cr I & $3.47 \pm 0.48$ & $-1.08 \pm 0.75$ & $11.07 \pm 1.77$ & $249$ \\
+                & & Blue & & Cr II & $4.15 \pm 0.49$ & $2.00 \pm 0.74$ & $12.77 \pm 1.74$ & $221$ \\
+                & & Blue & & Co I & $3.70 \pm 0.52$ & $0.93 \pm 0.49$ & $7.05 \pm 1.15$ & $123$ \\
+                & & Blue & & Zn I & $3.19 \pm 0.56$ & $6.48 \pm 0.62$ & $7.18 \pm 1.44$ & $187$ \\
+                & & Blue & & Ca I & $3.41 \pm 0.48$ & $6.29 \pm 0.57$ & $10.34 \pm 1.34$ & $211$ \\
+                & & Blue & & Cu I & $4.00 \pm 0.50$ & $8.19 \pm 0.59$ & $9.69 \pm 1.39$ & $189$ \\
+                & & Blue & & Ti I & $3.00 \pm 0.63$ & $-16.29 \pm 0.65$ & $6.29 \pm 1.53$ & $296$ \\
+                & & Blue & & Ti II & $3.04 \pm 0.63$ & $5.94 \pm 0.69$ & $6.77 \pm 1.63$ & $239$ \\
+                & & Blue & & Sc II & $3.30 \pm 0.70$ & $12.96 \pm 0.57$ & $5.54 \pm 1.35$ & $183$ \\
+                & & Blue & & Ru I & $3.25 \pm 0.89$ & $-10.32 \pm 0.73$ & $5.42 \pm 1.71$ & $210$ \\
+                \citet{CasasayasBarris2020} & HARPS-N, CARMENES & --- & 3, 1 & Fe II & --- & $-2.8 \pm 0.8$ & --- & \\
+                & & --- & & Na I & --- & $-3.1 \pm 0.9$ & --- & \\
+                & & --- & & $H_{\alpha}$ & --- & $-3.0 \pm 1.2$ & --- & \\
+                \citet{Hoeijmakers2020} & EXPRES & --- & 1 & Fe I & $3.45$ & $-4.81 \pm 0.72$ & --- & \\
+                & & --- & & Fe II & $4.60$ & $-0.75 \pm 0.37$ & --- & \\
+                & & --- & & Cr II & $3.69$ & $-3.40 \pm 0.42$ & --- & \\
+                & & --- & & Na I & $3.40$ & $-4.38 \pm 0.54$ & --- & \\
+                & & --- & & Mg I & $3.33$ & $-8.40 \pm 1.40$ & --- & \\
+                \citet{Nugroho2020} & HARPS-N & --- & 3 & Fe I & $14.30$ & $-3.6 \pm 0.3$ & & $200.1 \pm 5.2$ \\
+                & & --- & & Fe II & $14.61$ & $-1.4 \pm 0.2$ & & $165.0 \pm 3.5$ \\
+                & & --- & & Na I & $7.72$ & $-1.4 \pm 0.7$ & & $180.0 \pm 11.8$ \\
+                & & --- & & Ca II & $7.53$ & $2.2 \pm 1.2$ &  & $138.5 \pm 15.3$\\
+                & CARMENES & --- & 1 & Fe I & $6.44$ & $-6.5 \pm 0.6$ &  & $263.1 \pm 8.8$\\
+                &          & --- &   & Fe II &$3.60$ & $-0.4 \pm 0.6$ &  & $139.2 \pm 2.5$\\
+                &          & --- &   & Na I  &$6.83$ & $-0.6 \pm 0.7$ &  & $167.3 \pm 12.1$\\
+                &          & --- &   & Ca II &$8.60$ & $0.1 \pm 0.6$ &   & $174.8 \pm 8.2$ \\
+                \citet{Rainer2021} & HARPS-N & --- & 5 & Fe I & --- & $-4.7^{+0.3}_{-0.7}$ &  & $147^{+7}_{-6}$\\
+                \citet{Langeveld2022} & HARPS-N & --- & 3 & Na I & --- & $-3.1 \pm 1.9$ & --- & \\
+                \citet{Sicilia2022} & HARPS-N & --- & 3 & $H_{\alpha}$ & --- & $-5.2^{+1.8}_{-1.7}$ &  &$156.3^{+28.5}_{-27.0}$ \\
+                & & --- & & Na I D$_1$ & --- & $-3.8^{+0.7}_{-0.7}$ &  & $192.5^{+12.4}_{-13.5}$\\
+                & & --- & & Na I D$_2$ & --- & $-3.7^{+0.9}_{-0.9}$ &  & $170.0^{+14.9}_{-13.5}$\\
             \enddata
-        \end{deluxetable*}
-        
+                
+                    \end{deluxetable*}
+
+                        
+                    
         
 
         \subsection{Detections and Nondetections}\label{subsec:Detections}
@@ -262,9 +264,7 @@
         
         % in this section, I analyze the Vsys evolution of each species at least meeting the tentative detection threshold
             \subsubsection{Ingress/Egress Asymmetries}\label{subsubsec:Ingress/Egress Asymmetries}
-                \begin{itemize}
-                    \item 
-                \end{itemize}
+
                 
             \subsubsection{Line Profile Diagnostics}\label{subsubsec:Wind Profile Diagnostics}
                 With the line behavior analyzed over the course of transit, we are left to attribute the observed asymmetries to several atmospheric equilibrium mechanisms. These include, but are not limited to, atmospheric escape, scale height differences, condensation, eccentricity, clouds, spatially varying winds, tidal deformation, and temperature-dependent opacity~\citep{Savel2023}. 
@@ -304,7 +304,7 @@
     \vspace{5mm}
     \facilities{LBT}
 
-    \software{astropy \citep{2013A&A...558A..33A,2018AJ....156..123A}, 
+    \software{astropy \citep{astropy}, 
             Jupyter \citep{jupyter},
             matplotlib \citep{Matplotlib},
             molecfit \citep{Kausch2015, Smette2015},
@@ -323,140 +323,158 @@
     %% command and will number appendix equations (A1), (A2), etc. The
     %% Figure and Table counter will not reset.
 
-    \appendix  
-        \section{Model transmission spectra}\label{fig:main-spectra}
-        \begin{figure*}[ht!]
-            \includegraphics[width=0.4\textwidth]{plots-updated/spectra/spectra.KELT-20b.inverted-transmission-better.pdf}
-            % Add additional subfigures as needed
-        \caption{Model transmission spectra generated by \code{petitRADTRANS}, with the wavelengths covered by PEPSI's arms shown in blue and red, respectively.}
-                
-            \end{figure*}
-        
-        \section{Line Profiles of Each Arm}
-            \begin{figure*}[ht!]\label{fig:line-profle-overlaid-arms}
-                \begin{subfigure}[b]{0.3\textwidth}
-                    \centering
-                    \includegraphics[width=\textwidth]{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Fe I.line-profiles-overlaidarms.pdf}
-                \end{subfigure}
-                \begin{subfigure}[b]{0.3\textwidth}
-                    \centering
-                    \includegraphics[width=\textwidth]{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Fe II.line-profiles-overlaidarms.pdf}
-                \end{subfigure}
-                \begin{subfigure}[b]{0.3\textwidth}
-                    \centering
-                    \includegraphics[width=\textwidth]{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Ca I.line-profiles-overlaidarms.pdf}
-                \end{subfigure}
-                \begin{subfigure}[b]{0.3\textwidth}
-                    \centering
-                    \includegraphics[width=\textwidth]{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Na I.line-profiles-overlaidarms.pdf}
-                \end{subfigure}
-                \begin{subfigure}[b]{0.3\textwidth}
-                    \centering
-                    \includegraphics[width=\textwidth]{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Ni I.line-profiles-overlaidarms.pdf}
-                \end{subfigure}
-                \caption{}
-                
-            \end{figure*}
-
-        \section{${K_p-\Delta\!V}$ Maps and 1D CCFs}
-        \begin{figure*}[ht!]
-            \centering
-            % Row 1
-            \begin{subfigure}[b]{0.4\textwidth}
-                \includegraphics[width=\textwidth]{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Fe.CCFs-shifted.pdf}
-                \caption{}\label{fig:2d-ccf-Fe-combined}
-            \end{subfigure}
-            \begin{subfigure}[b]{0.4\textwidth}
-                \includegraphics[width=\textwidth]{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Fe.SNR-Gaussian.pdf}
-            \caption{}\label{fig:1d-ccf-Fe-combined}
-            \end{subfigure}
-           
-        
-            % Row 2
-            \begin{subfigure}[b]{0.4\textwidth}
-                \includegraphics[width=\textwidth]{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Fe+.CCFs-shifted.pdf}
-                \caption{}\label{fig:2d-ccf-Fe+-combined}
-            \end{subfigure}
-            \begin{subfigure}[b]{0.4\textwidth}
-                \includegraphics[width=\textwidth]{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Fe+.SNR-Gaussian.pdf}
-                \caption{}\label{fig:1d-ccf-Fe+-combined}
-            \end{subfigure}
-        
-            % Row 3
-            \begin{subfigure}[b]{0.4\textwidth}
-                \includegraphics[width=\textwidth]{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Na.CCFs-shifted.pdf}
-                \caption{}\label{fig:2d-ccf-Na-combined}
-            \end{subfigure}
-            \begin{subfigure}[b]{0.4\textwidth}
-                \includegraphics[width=\textwidth]{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Na.SNR-Gaussian.pdf}
-                \caption{}\label{fig:1d-ccf-Na-combined}
-            \end{subfigure}
-            % Row 4
-            \begin{subfigure}[b]{0.4\textwidth}
-                \includegraphics[width=\textwidth]{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Co.CCFs-shifted.pdf}
-                \caption{}\label{fig:2d-ccf-Co-combined}
-            \end{subfigure}
-            \begin{subfigure}[b]{0.4\textwidth}
-                \includegraphics[width=\textwidth]{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Co.SNR-Gaussian.pdf}
-                \caption{}\label{fig:1d-ccf-Co-combined}
-            \end{subfigure}
-        
-            % Row 5
-            \begin{subfigure}[b]{0.4\textwidth}
-                \includegraphics[width=\textwidth]{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.V.CCFs-shifted.pdf}
-                \caption{}\label{fig:2d-ccf-V-combined}
-            \end{subfigure}
-            \begin{subfigure}[b]{0.4\textwidth}
-                \includegraphics[width=\textwidth]{plots-updated/line-profile/blue/KELT-20b.20190504.blue.V.SNR-Gaussian.pdf}
-                \caption{}\label{fig:1d-ccf-V-combined}
-            \end{subfigure}
-        
-            % Row 6
-            \begin{subfigure}[b]{0.4\textwidth}
-                \includegraphics[width=\textwidth]{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Ca.SNR-Gaussian.pdf}
-                \caption{}\label{fig:1d-ccf-Ca-combined}
-            \end{subfigure}
-            \begin{subfigure}[b]{0.4\textwidth}
-                \includegraphics[width=\textwidth]{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Mn.CCFs-shifted.pdf}
-                \caption{}\label{fig:2d-ccf-Mn-combined}
-            \end{subfigure}
-        
-            \caption{This figure shows the $K_p-v_{sys}$ maps, 1D CCFs, and line profiles for each species meeting the ${3\sigma}$ tentative detection threshold. The offset of the center of the 1D CCF Gaussian from the planetary rest frame, ${v_{sys}}=0$, denotes the line velocity.}
-            \label{fig:Detections}
-        \end{figure*}
-        
-        \section{Phase Resolved Binned Line Profiles}
-            \begin{figure*}[ht!] \label{fig:Dynamics}
-                 \begin{subfigure}[b]{0.5\textwidth}
-                    \includegraphics[width=\textwidth]{plots-updated/line-velocity/binned/pcolor/points/KELT-20b.Fe.phase-binned+RVs.pdf}
-                    \caption{}\label{fig:wind-chars-Fe-combined}
-                \end{subfigure}
-                 \begin{subfigure}[b]{0.5\textwidth}
-                    \includegraphics[width=\textwidth]{plots-updated/line-velocity/binned/pcolor/points/KELT-20b.Fe+.phase-binned+RVs.pdf}
-                    \caption{}\label{fig:wind-chars-Fe-combined}
-                \end{subfigure}
-                 \begin{subfigure}[b]{0.5\textwidth}
-                    \includegraphics[width=\textwidth]{plots-updated/line-velocity/binned/pcolor/points/KELT-20b.Na.phase-binned+RVs.pdf}
-                    \caption{}\label{fig:wind-chars-Fe-combined}
-                \end{subfigure}
-                 \begin{subfigure}[b]{0.5\textwidth}
-                    \includegraphics[width=\textwidth]{plots-updated/line-velocity/binned/pcolor/points/KELT-20b.Ni.phase-binned+RVs.pdf}
-                    \caption{}\label{fig:wind-chars-Fe-combined}
-                \end{subfigure}
-                 \begin{subfigure}[b]{0.5\textwidth}
-                    \includegraphics[width=\textwidth]{plots-updated/line-velocity/binned/pcolor/points/KELT-20b.Ca.phase-binned+RVs.pdf}
-                    \caption{}\label{fig:wind-chars-Fe-combined}
-                \end{subfigure}
-                 \begin{subfigure}[b]{0.5\textwidth}
-                    \includegraphics[width=\textwidth]{plots-updated/line-velocity/binned/pcolor/points/KELT-20b.Co.phase-binned+RVs.pdf}
-                    \caption{}\label{fig:wind-chars-Fe-combined}
-                \end{subfigure}
-
-                \caption{Phase-binned phase-resolved velocity offsets for each species during transit.}
-            \end{figure*}
-    \clearpage
+\appendix  
+    \section{Model transmission spectra}\label{fig:main-spectra}
+    \begin{figure}
+        \includegraphics[width=0.4\textwidth]{plots-updated/spectra/spectra.KELT-20b.inverted-transmission-better.pdf}
+        % Add additional subfigures as needed
+    \caption{Model transmission spectra generated by \code{petitRADTRANS}, with the wavelengths covered by PEPSI's arms shown in blue and red, respectively.}
+            
+        \end{figure}
     
-\bibliography{bibliography}{}
-\bibliographystyle{aasjournal}
+    \section{Line Profiles of Each Arm}
+
+         \begin{figure}
+            \gridline{\fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Mg I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
+                      \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Fe I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
+                      \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Fe II.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}}
+            \gridline{\fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Na I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
+                      \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Co I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
+                      \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Cr I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}}
+            \gridline{\fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Cr II.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
+                      \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Zn I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
+                      \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Cu I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}}
+            \gridline{\fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Ca I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
+                      \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Ti I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
+                      \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Ti II.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}}
+            \gridline{\fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Sc II.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
+                      \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Ru I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}}
+            \caption{}
+        \end{figure}
         
+    \section{Raw CCFs}    
+    
+
+
+   \section{${K_p-\Delta\!V}$ Maps and 1D CCFs}
+
+        \begin{figure}
+            \centering
+            \gridline{
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Mg.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Mg.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Mg-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Mg.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Mg-blue}}
+            }
+            \gridline{
+                \fig{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Fe.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-combined}}
+                \fig{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Fe.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-combined}}
+            }
+            \gridline{
+                \fig{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Fe+.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-combined}}
+                \fig{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Fe+.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-combined}}
+            }
+            \gridline{
+                \fig{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Na.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-combined}}
+                \fig{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Na.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-combined}}
+            }
+            
+        \end{figure}
+        \begin{figure}
+            
+            \gridline{
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Co.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Co.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-combined}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Co.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-combined}}
+            }
+            \gridline{
+                \fig{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Cr.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-combined}}
+                \fig{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Cr.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-combined}}
+            }
+            \gridline{
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Cr+.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Cr+.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Cr+.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
+            }
+            \gridline{
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Zn.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Zn.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Zn.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
+            }
+        \end{figure}
+        \begin{figure}
+            
+            \gridline{
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Cu.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Cu.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Cu.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
+            }
+            \gridline{
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Ca.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Ca.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Ca.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
+            }
+            \gridline{
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Ti.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Ti.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Ti.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
+            }
+            \gridline{
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Ti+.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Ti+.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Ti+.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
+            }
+        \end{figure}
+        \begin{figure}
+            
+            \gridline{
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Sc+.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Sc+.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Sc+.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
+            }
+            \gridline{
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Ru.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Ru.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Ru.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
+            }
+            \caption{This figure shows the $K_p-v_{sys}$ maps, 1D CCFs, and line profiles for each species exceeding the ${3\sigma}$ tentative detection threshold. The offset of the center of the 1D CCF Gaussian from the planetary rest frame, ${v_{sys}}=0$, denotes the line velocity.}
+            \label{fig:Detections}
+        \end{figure}
+        
+        
+    \section{Line Dynamics}
+        \begin{figure}\label{fig:enter-label}
+            \centering
+            \gridline{
+                \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Mg.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
+                \fig{plots-updated/line-velocity/KELT-20b.Mg.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-Mg-blue}}
+            }
+            \gridline{
+                \fig{plots-updated/line-profile-asymmetries/combined/KELT-20b.20190504.combined.Fe.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
+                \fig{plots-updated/line-velocity/KELT-20b.Fe.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-Fe-combined}}
+            }
+
+            \gridline{
+                \fig{plots-updated/line-profile-asymmetries/combined/KELT-20b.20190504.combined.Fe+.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}     
+                \fig{plots-updated/line-velocity/KELT-20b.Fe+.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-FeII-combined}}
+            }
+            
+            \gridline{                        
+                \fig{plots-updated/line-profile-asymmetries/combined/KELT-20b.20190504.combined.Cr.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
+                \fig{plots-updated/line-velocity/KELT-20b.Cr.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-CrI-combined}}
+            }
+            \gridline{                        
+                \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Cr+.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
+                \fig{plots-updated/line-velocity/KELT-20b.Cr+.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-CrI-combined}}
+            }
+            \gridline{
+                \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Co.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
+                \fig{plots-updated/line-velocity/KELT-20b.Co.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-Co-blue}}
+            }
+        \end{figure}
+
+
+\bibliography{bibliography}{}
+\bibliographystyle{aasjournal}       
+    \clearpage
+
 \end{document}
