@@ -40,7 +40,7 @@
 
 
     \begin{abstract}
-        Ultra hot Jupiters (UHJs) are prime observational candidates owing to their proximity to their host stars. They have large radii with inflated envelopes, high temperatures, and short orbital periods --- allowing for frequent observations with strong signal clarity. Using the PEPSI high resolution spectrograph on the LBT, we present a complete inventory of detections, line velocities, and phase-resolved dynamics for atomic and molecular species in KELT-20b's atmosphere. We confirm previous detections of Fe I and Fe II, and Na I and report new tentative detections of Ni I, Ca I, Co I, and V I.
+        Ultra hot Jupiters (UHJs) are prime observational candidates owing to their proximity to their host stars. They have large radii with inflated envelopes, high temperatures, and short orbital periods --- allowing for frequent observations with strong signal clarity. Using the PEPSI high resolution spectrograph on the LBT, we present a complete inventory of detections, line velocities, and phase-resolved dynamics for atomic and molecular species in KELT-20b's atmosphere. We do not detect any molecular species, and we confirm previous atomic detections of Mg I, Fe I, Fe II, Na I, Cr II, and C II. We present a novel detection of Cu I and novel tentative detections of Cr I, Co I, Zn I, Ca I, and Ti II.
     \end{abstract}
 
     \keywords{}
@@ -137,8 +137,6 @@
             Ca I & 0 & 10 & 5 & $2.10 \times 10^{-8}$ \\
             Cu I & 1 & 1 & 3 & $2.06 \times 10^{-8}$ \\
             Ti II & 1 & 1 & 3 & $5.63 \times 10^{-9}$ \\
-            Sc II & 1 & 1 & 3 & $2.37 \times 10^{-9}$ \\
-            Ru I & 1 & 1 & 3 & $9.65 \times 10^{-11}$ \\
             \enddata
         \end{deluxetable*}
         
@@ -147,12 +145,12 @@
             
             
         \subsection{Cross-correlation}
-            With data preparation complete, we cross-correlate model and observed spectra in the stellar rest frame, with the same procedure as described in~\citet{Johnson2023}. To find the peak SNR of each spectrum in our dataset, we divided the flux values by their corresponding error values, then selected the 90th percentile value. We compute per-spectrum CCF weights by regridding the Doppler shift-corrected spectra wavelengths to the template wave wavelengths, then multiplying the per-spectrum SNR with the difference between the maximum flux value of the regridded template spectrum and the flux values of the regridded template itself. The cross-correlation procedure is adapted from the BANZAI-NRES package~\citep{McCully2022}. With each spectrum cross-correlated, we then interpolate the cross-correlation function and its uncertainty for the given radial velocity shift corresponding to $K_p$. We sum over all spectra, multiplying each by its corresponding CCF weight, then median subtract. Finally, we normalized the now-combined CCF amplitude with the metric of the detection strength being the standard deviation of the CCF at $|v_{sys}| > 100 km/s$.
+            With data preparation complete, we cross-correlate model and observed spectra in the stellar rest frame, with the same procedure as described in~\citet{Johnson2023}. To find the peak SNR of each spectrum in our dataset, we divided the flux values by their corresponding error values, then selected the 90th percentile value. We compute per-spectrum CCF weights by regridding the Doppler shift-corrected spectra wavelengths to the template wave, then multiplying the per-spectrum SNR with the difference between the maximum flux value of the regridded template spectrum and the flux values of the regridded template itself. The cross-correlation procedure is adapted from the BANZAI-NRES package~\citep{McCully2022}. With each spectrum cross-correlated, we then interpolate the cross-correlation function and its uncertainty for the given radial velocity shift corresponding to $K_p$. We sum over all spectra, multiplying each by its corresponding CCF weight, then median subtract. Finally, we normalized the now-combined CCF amplitude with the metric of the detection strength being the standard deviation of the CCF at $|v_{sys}| > 100 km/s$.
             
-            Next, we shift the CCFs into the planetary rest frame and stack the red and blue arm CCFs separately. With a ${K_p-\Delta\!V}$ SNR map generated, we search for a SNR peak over a grid of $K_p$ values ranging from $50-350$ kms$^{-1}$ in steps of $1.0$ kms$^{-1}$. These maps are shown for each species within and exceeding the ${3\sigma}-{5\sigma}$ tentative detection window in Figure~\ref{fig:line-profle-overlaid-arms}. The VMRs for species meeting or exceeding the tentative detection window are shown in Table 1, as computed with the methodology described in Section~\ref{subsec:Model Spectra}.
+            Next, we shift the CCFs into the planetary rest frame and stack the red and blue arm CCFs separately. With a ${K_p-\Delta\!V}$ SNR map generated, we search for a SNR peak over a grid of $K_p$ values ranging from $50-350$ kms$^{-1}$ in steps of $1.0$ kms$^{-1}$. These maps are shown for each species within and exceeding the ${3\sigma}-{4\sigma}$ tentative detection window in Figure~\ref{fig:line-profle-overlaid-arms}. The VMRs for species meeting or exceeding the tentative detection window are shown in Table 1, as computed with the methodology described in Section~\ref{subsec:Model Spectra}.
             
        \subsection{Doppler Shadow Removal}
-                As the planet crosses the stellar disk, the disk-integrated rotationally-broadened stellar absorption lines are deformed, a phenomenon known as the Rossiter-McLaughlin (RM) effect. When dividing each in-transit spectra by the out-of-transit spectra to isolate the atmospheric signal, the deformed lines cause an artifact on the CCF at the radial velocity corresponding to the stellar disk being blocked by the transiting planet at the time of exposure, referred to as the Doppler shadow. We must correct for this obfuscation of the planetary signal in the CCF, as it decreases the recovered SNR and can alter the calculated radial velocity of each detection. KELT-20b's orbit is well-aligned ($\lambda = 3.4 \pm 2.1 ^{\circ}$) with its fast-rotating host star's projected-spin axis~\citep{Lund2017}, causing a strong RM effect. We correct for the RM effect using a Doppler shadow model, described in detail in~\citet{Johnson2016} and further discussed in~\citep{Johnson2014, Johnson2017}. In brief, we begin by dividing the stellar disk into a surface elements defined by $n \times n$ Cartesian grid, finding the fraction of each exposure time that grid spaces are obscured or partially obscured. We assume solid body rotation and a Gaussian line profile in each surface element, scaled by a quadratic limb darkening coefficient. We also neglect the broadening effects of macroturbulence and gravity darkening~\citet{Johnson2016}. We scale the line profile contribution by each obscured surface element by this fraction, then convolve the line profiles with the instrumental line profile, a Gaussian. Finally, we subtract the line profile by the out-of-transit line profile, yielding the time-series CCF contribution from only the transiting planet, the Doppler Shadow. Our model outputs a normalized line profile, so we must rescale the model to match the CCF amplitudes. We run a grid search with the the Doppler shadow model scaling as the free parameter, with root-mean-square error as the goodness-of-fit metric. We select the best fit scaled Doppler shadow model, then subtract it from the CCFs. Finally, we again mean subtract and normalize each CCF, then combine arms into a single set of CCFs.
+                As the planet crosses the stellar disk, the disk-integrated rotationally-broadened stellar absorption lines are deformed, a phenomenon known as the Rossiter-McLaughlin (RM) effect \citep{Rossiter1924, McLaughlin1924}. When dividing each in-transit spectra by the out-of-transit spectra to isolate the atmospheric signal, the deformed lines cause an artifact on the CCF at the radial velocity corresponding to the stellar disk being blocked by the transiting planet at the time of exposure, referred to as the Doppler shadow. We must correct for this obfuscation of the planetary signal in the CCF, as it decreases the recovered SNR and can alter the calculated radial velocity of each detection. KELT-20b's orbit is well-aligned ($\lambda = 3.4 \pm 2.1 ^{\circ}$) with its fast-rotating host star's projected-spin axis~\citep{Lund2017}, causing a strong RM effect. We correct for the RM effect using a Doppler shadow model, described in detail in~\citet{Johnson2016} and further discussed in~\citep{Johnson2014, Johnson2017}. In brief, we begin by dividing the stellar disk into a surface elements defined by a $300 \times 300$ Cartesian grid, finding the fraction of each exposure time that grid spaces are obscured or partially obscured. We assume solid body rotation and a Gaussian line profile in each surface element, scaled by a quadratic limb darkening coefficient. We also neglect the broadening effects of macroturbulence and gravity darkening~\citet{Johnson2016}. We scale the line profile contribution by each obscured surface element by this fraction, then convolve the line profiles with the instrumental line profile, a Gaussian. Finally, we subtract the line profile by the out-of-transit line profile, yielding the time-series CCF contribution from only the transiting planet, the Doppler Shadow. Our model outputs a normalized line profile, so we must rescale the model to match the CCF amplitudes. We run a grid search with the the Doppler shadow model scaling as the free parameter, with root-mean-square error as the goodness-of-fit metric. We select the best fit scaled Doppler shadow model, then subtract it from the CCFs. Finally, we again mean subtract and normalize each CCF, then combine arms into a single set of CCFs.
                 
                 \begin{figure}
                     \centering
@@ -166,12 +164,12 @@
         \subsection{Line Velocities}\label{subsec:Line Velocities}
             The fitting procedure is as follows: Working in the ${K_p-\Delta\!V}$ space of a single time-series CCF, we loop over a range of possible $K_p$ values: $50$-$350$. For each $K_p$ slice, we search through the peaks along the one-dimensional $RV$ array in descending order, selecting the greatest peak with an $|RV| \leq 15$ kms$^{-1}$. We then fit the Gaussian curve, our initial guess for its center $\mu = RV$. This procedure automatically filters out peaks at nonphysical velocities that may arise due to aliasing.
             
-            We select the fit parameters corresponding to the $K_p$ slice hosting the peak CCF amplitude across the entire $K_p-v_{sys}$ map, reporting the species velocity $v_{sys} = \mu$ and its detection significance $SNR$ equal to the amplitude of the Gaussian in Table~\ref{tab:results-summary}.
+            We select the fit parameters corresponding to the $K_p$ slice hosting the peak CCF amplitude across the entire $K_p-\Delta V$ map, reporting the species velocity $v_{sys} = \mu$ and its detection significance $SNR$ equal to the amplitude of the Gaussian in Table~\ref{tab:results-summary}.
             
             We repeat this fitting procedure for each in-transit time-series CCF, but instead selecting the fit parameters that correspond to the $K_p$ slice equal to the expected $K_p$ of KELT-20b per the ephemeris in Table~\ref{tab:parameters_summary}. We then plot the species' $\Delta V$ as a function of orbital phase, effectively observing its line velocity change over the course of each in-transit exposure. The described plots for each species are in Figure~\ref{fig:Detections}. 
 
         \subsection{Assessing Detection Validity}\label{subsec:Assessing Detection Results}
-            With a ${K_p-v_{sys}}$ map 2D CCF, 1D CCF with Gaussian fit at peak SNR $K_p$ slice, and a phase-resolved line profile center during transit, we have a comprehensive profile of each atomic species detected in KELT-20b's atmosphere. We heuristically assess the detection validity by noting the location and magnitude of the peak signal on the ${K_p-v_{sys}}$ map, and checking three criteria in order: A $>{3\sigma}$ SNR peak, a standard shape within ${K_p-v_{sys}}$ space, and a $v_{sys}$ within a physical range of line velocities. Aside from this procedure, we must also consider aliasing between the search species and strong lines corresponding to other species in the spectrum, as described in~\citet{Borsato2023}. In the 1D CCFs, these artifacts manifest as peaks at both visually detectable nonphysical $v_{sys}$ values, and peaks that overlap with the true absorption signal.
+            With a ${K_p-\Delta V}$ map 2D CCF, 1D CCF with Gaussian fit at peak SNR $K_p$ slice, and a phase-resolved line profile center during transit, we have a comprehensive profile of each atomic species detected in KELT-20b's atmosphere. We heuristically assess the detection validity by noting the location and magnitude of the peak signal on the ${K_p-\Delta V}$ map, and checking three criteria in order: A $>{3\sigma}$ SNR peak, a standard shape within ${K_p-\Delta V}$ space, and a $\Delta V$ within a physical range of line velocities. Aside from this procedure, we must also consider aliasing between the search species and strong lines corresponding to other species in the spectrum, as described in~\citet{Borsato2023}. In the 1D CCFs, these artifacts manifest as peaks at both visually detectable nonphysical $v_{sys}$ values, and peaks that overlap with the true absorption signal.
             % plot of example telluric corrections by molecfit
             
             % plots showing petitRADTRANS-generated model spectra for each species meeting tentative detection threshold
@@ -186,10 +184,10 @@
                 \colhead{Arm} &
                 \colhead{$N_{\text{obs}}$} &
                 \colhead{Species} & 
-                \colhead{SNR} & 
-                \colhead{$\Delta V$} & 
-                \colhead{FWHM} &
-                \colhead{$K_p$}
+                \colhead{SNR ($\sigma$)} & 
+                \colhead{$\Delta V$ (kms$^{-1}$)}& 
+                \colhead{FWHM (kms$^{-1}$)} &
+                \colhead{$K_p$ (kms$^{-1}$)}
             }
             \startdata
                 \textbf{This Work} & PEPSI & Blue & 1 & Mg I & $5.41 \pm 0.36$ & $3.11 \pm 0.69$ & $21.35 \pm 1.62$ & $177$ \\
@@ -203,16 +201,14 @@
                 & & Blue & & Ca I & $3.41 \pm 0.48$ & $6.29 \pm 0.57$ & $10.34 \pm 1.34$ & $211$ \\
                 & & Blue & & Cu I & $4.00 \pm 0.50$ & $8.19 \pm 0.59$ & $9.69 \pm 1.39$ & $189$ \\
                 & & Blue & & Ti II & $3.04 \pm 0.63$ & $5.94 \pm 0.69$ & $6.77 \pm 1.63$ & $239$ \\
-                & & Blue & & Sc II & $3.30 \pm 0.70$ & $12.96 \pm 0.57$ & $5.54 \pm 1.35$ & $183$ \\
-                & & Blue & & Ru I & $3.25 \pm 0.89$ & $-10.32 \pm 0.73$ & $5.42 \pm 1.71$ & $210$ \\
                 \citet{CasasayasBarris2019} & HARPS-N & --- & 3 & Fe II & --- & $-2.8 \pm 0.8$ & $7.2 \pm 1.2$ & $174.4 \pm 14.0$ \\
                 & & --- & & Na I & --- & $-3.1 \pm 0.9$ & $9.2 \pm 2.0$ & $176.6 \pm 11.7$ \\
                 & & --- & & $H_{\alpha}$ & --- & $-3.0 \pm 1.2$ & $19.0 \pm 1.6$ & $165.6 \pm 16.7$ \\
                 & & --- & & $H_{\beta}$ & --- & $-1.2 \pm 1.4$ & $19.4 \pm 2.5$ & $136.2 \pm 18.6$ \\
                 & & --- & & $H_{\gamma}$ & --- & $-2.3 \pm 2.7$  & $16.6 \pm 4.2$ & $135.0 \pm 34.8$ \\
                 & CARMENES & --- & 1 & Na I & --- & $-3.2 \pm 1.7$ & $8.0 \pm 1.2$ & $182.5 \pm 14.3$ \\
-                & & --- & Ca II & --- & $-1.9 \pm 0.6$ & $9.2 \pm 1.0$ & $157.7 \pm 8.2$ \\
-                & & --- & $H_{\alpha}$ & --- & $-4.5 \pm 0.5 $ & $22.6 \pm 0.9 $ & $166.2 \pm 7.4$ \\
+                & & --- & & Ca II & --- & $-1.9 \pm 0.6$ & $9.2 \pm 1.0$ & $157.7 \pm 8.2$ \\
+                & & --- & & $H_{\alpha}$ & --- & $-4.5 \pm 0.5 $ & $22.6 \pm 0.9 $ & $166.2 \pm 7.4$ \\
                 \citet{Hoeijmakers2020} & EXPRES & --- & 1 & Fe I & $3.45$ & $-4.81 \pm 0.72$ & $12.39 \pm 1.69$ & 175 \\
                 & & --- & & Fe II & $4.60$ & $-0.75 \pm 0.37$ & $8.54 \pm 0.87$ & 175 \\
                 & & --- & & Cr II & $3.69$ & $-3.40 \pm 0.42$ & $5.31 \pm 0.99$ & 175 \\
@@ -236,63 +232,44 @@
         
         \subsection{Detections and Nondetections}\label{subsec:Detections}
 
-        To date, high-resolution cross-correlation transmission spectroscopy (HRCCTS) of KELT-20b has yielded detections of Mg I, Fe I, Fe II, Na I, Cr II, and Ca II \citep{CasasayasBarris2019, Hoeijmakers2020, Nugroho2020, Rainer2021, Langeveld2022, Sicilia2022}, all of which we confirm. Additionally, we present a novel detection of Cu I and tentative detections of Cr I, Co I, Zn I, Ca I, Ti II, Sc II, and Ru I (see Table \ref{tab:detection-summary}).
+        To date, high-resolution cross-correlation transmission spectroscopy (HRCCTS) of KELT-20b has yielded detections of Mg I, Fe I, Fe II, Na I, Cr II, and Ca II \citep{CasasayasBarris2019, Hoeijmakers2020, Nugroho2020, Rainer2021, Langeveld2022, Sicilia2022}, all of which we confirm. Additionally, we present a novel detection of Cu I and tentative detections of Cr I, Co I, Zn I, Ca I, and Ti II. 
+
+        The first step in our detection methodology is to determine which arm(s) of the spectrograph and subsequent cross-correlations to analyze. First, we examine generated transmission spectra
+
+        \begin{figure}
+            \centering
+            \gridline{
+                        \fig{plots-updated/spectra/spectrum.KELT-20b.Fe+.5.395650007488179e-05.inverted-transmission-better.pdf}{0.25\textwidth}{}
+                        \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Fe II.line-profiles-overlaidarms.pdf}{0.25\textwidth}{}
+            }
+            \gridline{
+                        \fig{plots-updated/spectra/spectrum.KELT-20b.Mg.6.08e-05.inverted-transmission-better.pdf}{0.25\textwidth}{}
+                        \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Mg I.line-profiles-overlaidarms.pdf}{0.25\textwidth}{}
+            }
+            \label{fig:enter-label}
+        \end{figure}
+
+
+
         
+        
+        
+        The cross-correlation map of each species, with the dark streak being the atmospheric signal, can be found in the first column of Figure \ref{fig:Detections} for each species. The $K_p - \delta V$ map of each is in the second column, and the 1D CCF of each is in the third column. We 
+        
+        
+        (see Table \ref{tab:detection-summary} and Figure \ref{fig:Detections}).
         \subsection{Atmospheric Dynamics}\label{subsec:Atmospheric Dynamics}
 
-            
+        We seek to disentangle the various atmospheric dynamical mechanisms of KELT-20b by analyzing the phase-resolved line profiles of each species. We compare the offset of the center of the Gaussian fit to the line velocity from zero velocity in the planetary rest frame ($K_p -RV$ or $\Delta V$) between ingress and egress ($phi < 0$ and $phi > 0$) and the phase-binned $\Delta V$) over the course of transit. For species exceeding the detection threshold ($4 \sigma$) in each exposure, we offer a comprehensive view of the planet's dynamics during this observation. By comparing our results to previous works \citep{}, we also provide evidence for dynamical evolution.
 
+        With the line behavior analyzed over the course of transit, we are left to attribute the observed asymmetries to several atmospheric equilibrium mechanisms. These include, but are not limited to, atmospheric escape, scale height differences, condensation, eccentricity, clouds, spatially varying winds, tidal deformation, and temperature-dependent opacity~\citep{Savel2023}. 
+
+        When comparing our HRCCTS observations to models, our conclusions' validity are dependent on the accuracy of the atmospheric model. Given the impact that three-dimensional equilibrium processes, such as those mentioned above, have on $K_p-v_{sys}$ maps~\citep{Wardenier2021}, we wish to provide evidence for one or more of these proposed equilibrium mechanisms and constrain the three-dimensional behavior in the atmosphere for further study. We investigate the phase-dependent dynamics of our detected species in three ways: (1) phase-binning three adjacent in-transit CCFs, ultimately offering seven binned CCFs showing the evolution of the line center, or $\Delta V$ over the course of transit; (2) combining the CCFs into two phase bins -- first contact to second contact and third contact to fourth contact (ingress and egress) -- then plotting each line profile; (3) combining the CCFs into two bins -- first contact to mid-transit and mid-transit to fourth contact -- then plotting each line profile. If present, we can diagnose the drivers of limb asymmetries for each species with two levels of granularity. We limit method (1) to the species exceeding the detection threshold, Mg I, Fe I, Fe II, Na I, Cr II, and Cu I, as the remaining species do not maintain a meaningful signal in the smaller phase bins over the course of transit (see Figure \ref{fig:line-profile-asymmetries} for small bin phase-resolved line profiles of species not shown in this section). We employ methods (2) and (3) for all species, though only some reach the tentative detection threshold in both ingress and egress (see Figure \ref{fig:phase-binned+RVs-results}).
 
         
-            \subsubsection{Ingress/Egress Asymmetries}\label{subsubsec:Ingress/Egress Asymmetries}
-
-            \begin{figure}
-                \caption{Caption}
-                \label{fig:line-profile-asymmetries}
-                \gridline{
-                    \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Fe.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
-                    \fig{plots-updated/line-velocity/blue/KELT-20b.Fe.blue.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-Fe-blue}}
-                }
-                \gridline{
-                    \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Fe+.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}     
-                    \fig{plots-updated/line-velocity/blue/KELT-20b.Fe+.blue.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-FeII-blue}}
-                }
-                \gridline{                        
-                    \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Cr.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
-                    \fig{plots-updated/line-velocity/blue/KELT-20b.Cr.blue.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-CrI-blue}}
-                }
-            \end{figure}
                 
-            \subsubsection{Line Profile Diagnostics}\label{subsubsec:Wind Profile Diagnostics}
-                With the line behavior analyzed over the course of transit, we are left to attribute the observed asymmetries to several atmospheric equilibrium mechanisms. These include, but are not limited to, atmospheric escape, scale height differences, condensation, eccentricity, clouds, spatially varying winds, tidal deformation, and temperature-dependent opacity~\citep{Savel2023}. 
 
-                When comparing our HRCCTS observations to models, our conclusions' validity are dependent on the accuracy of the atmospheric model. Given the impact that three-dimensional equilibrium processes, such as those mentioned above, have on $K_p-v_{sys}$ maps~\citep{Wardenier2021}, we wish to provide evidence for one or more of these proposed equilibrium mechanisms and constrain the three-dimensional behavior in the atmosphere for further study.
-
-                % Similar discussion from paper on WASP-121b from V. Bourrier et al. (This paper is referenced in Savel et al. for the blueshifting CCF diagnostic, specifically atmospheric escape)
-                    % DTN winds: The measured blueshift could trace fast winds going from the dayside to teh nightside along both terminators, as predicted for atmospheric ciruclation in the lower atmospheric layers of HJs. In this scenario the hotspot is expected to be located at the substellar point, as is indeed measured in the TESS phase curve of WASP-121b. -> Check from emission studies on KELT-20b the proposed location of the hotspot in relation to substellar point
-                    % DTN Winds: It might be then expected that heat is efficiently redistibuted throug the fast DTN winds, whereas the phase curve indicates a strong temperature contrast -> Check the phase curve of KELT-20b and implications of temperature contrast across terminator
-                    % DTN Winds: This might indicate that the iron signal arises form a different laer than those probed by the emission photometry. We may be probing layers at lower pressure than are probed by emission spectra, where the fast DTN winds homogenize temperature longitudinally. So the emission spectra are probing emission from high-altiude clods on the nightside, which would hide the emission from the deeper, hotter regions probed on the dayside.
-                    % Clouds: It has been proposed that the nightsides of most UHJs are covered in clouds of similar composition, which would form at temperatures of arbout 1100K. With Tirr of 3310K, WASP-121b is in a regime where such clouds are not yet predicted to disperese (Keating et al. 2019) -> Check 
-                    % Scale height differences: The measured bleushift could trace an anisoptropic expansion of the atmospheric layers, for exmaple, due to that asymmetrical irradiation of the dayside atmosphere or its compression by stellar wind and radiation.
-                    % 3D simulations of the planetary atmosphere and more precise observatinos are required to explore the origin of the measured blueshift
-                % Discussion from Kempton et al. 2012 (This paper is referenced in Savel et al. for blueshifting CCF diagnostic, specifically for scale height differences)
-                    % We additionally explore the possibility of recovering the average terminator wind speed as a function of altitude by measuring Doppler shifts of individual spectral lines and spatially resolving wind speeds across the leading and trailing terminators during ingress and egress -> By comparing your CCFs between ingress and egress, you can potentially provide observational evidence alognside this modeled evidence
-                    % The change of teh specific gas constant and its subsequent effect on the atmosphere's scale hei  ght likely significantly impacts the modeled transmission spectra of these GCMs. -> Examine the impact this has on your analysis given the scope, if any
-                % Discussion from Wardenier et al. 2021 (This paper is referenced in Savel et al. for blueshifting CCF diagnostic, specifically for Weak Drag State)
-                    % 
-                % Discussion from Savel et al. 2022 (This paper is referenced in Savel et al. for blueshifting CCF diagnostic, specifically for Weak Drag State)
-
-                % Discussion from Savel et al. 2022 (This paper is referenced in Savel et al. for blueshifting CCF diagnostic, specifically for cold interiors)
-                
-                % Discussion from Brogi et al. 2016 (This paper is referenced in Savel et al. for blueshifting CCF diagnostic, specifically for Superrotating jet)
-                
-                % Discussion from Ehrenreich et al. 2020 (This paper is referenced in Savel et al. for strongly blueshifting CCF diagnostic, specifically for Condensation)
-
-                % Discussion from Kempten and Rauscher 2012 (This paper is referenced in Savel et al. 2023 for varying Doppler shift over phase diagnostic and comparison of ingress/egress Doppler shifts and comparison of Doppler shifts of different-strength lines, specifically for spatially varying winds)
-                    % 
-                % Discussion from Wardenier et al. 2021 (This paper is referenced in Savel et al. 2023 for blueshifting CCF over phase, specifically for T-dependent opacity)
                     
-        % in this section I will attempt to connect the observed asymmetrical behavior of each species 1d CCF profile to proposed limb asymmetry mechanisms using Savel et al 2023
         \subsection{Nondetections}\label{subsec:Nondetections}
 
     \section{Conclusions}\label{sec:Conclusions}
@@ -321,6 +298,7 @@
     %% Figure and Table counter will not reset.
 
 \appendix  
+
     \section{Model transmission spectra}
     \begin{figure}
         \label{fig:model-spectra-appendix}
@@ -328,223 +306,192 @@
         % Add additional subfigures as needed
     \caption{Model transmission spectra generated by \code{petitRADTRANS}, with the wavelengths covered by PEPSI's arms shown in blue and red, respectively.}
             
+        \end{figure}    
+
+
+   \section{Detections}
+
+        \begin{figure}
+            \label{fig:raw-ccfs-appendix}
+            \centering
+            \gridline{
+                \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Mg I.line-profiles-overlaidarms.pdf}{0.25\textwidth}{}
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Mg.blue.CCFs-raw.pdf}{0.25\textwidth}{\label{fig:raw-ccf-Mg-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Mg.CCFs-shifted.pdf}{0.25\textwidth}{\label{fig:2d-ccf-Mg-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Mg.SNR-Gaussian.pdf}{0.25\textwidth}{\label{fig:1d-ccf-Mg-blue}}
+            }
+            \gridline{
+                \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Fe I.line-profiles-overlaidarms.pdf}{0.25\textwidth}{}
+                \fig{plots-updated/raw-ccfs/combined/KELT-20b.combined.Fe..CCFs-raw.pdf}{0.25\textwidth}{\label{fig:raw-ccf-Fe-blue}}
+                \fig{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Fe.CCFs-shifted.pdf}{0.25\textwidth}{\label{fig:2d-ccf-Fe-combined}}
+                \fig{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Fe.SNR-Gaussian.pdf}{0.25\textwidth}{\label{fig:1d-ccf-Fe-combined}}
+            }
+            \gridline{
+                \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Fe II.line-profiles-overlaidarms.pdf}{0.25\textwidth}{}
+                \fig{plots-updated/raw-ccfs/combined/KELT-20b.combined.Fe+..CCFs-raw.pdf}{0.25\textwidth}{\label{fig:raw-ccf-FeII-combined}}
+                \fig{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Fe+.CCFs-shifted.pdf}{0.25\textwidth}{\label{fig:2d-ccf-FeII-combined}}
+                \fig{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Fe+.SNR-Gaussian.pdf}{0.25\textwidth}{\label{fig:1d-ccf-FeII-combined}}
+            }
+            \gridline{
+                \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Na I.line-profiles-overlaidarms.pdf}{0.25\textwidth}{}
+                \fig{plots-updated/raw-ccfs/combined/KELT-20b.combined.Na..CCFs-raw.pdf}{0.25\textwidth}{\label{fig:raw-ccf-Na-combined}}
+                \fig{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Na.CCFs-shifted.pdf}{0.25\textwidth}{\label{fig:2d-ccf-Na-combined}}
+                \fig{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Na.SNR-Gaussian.pdf}{0.25\textwidth}{\label{fig:1d-ccf-Na-combined}}
+            }
         \end{figure}
+        
+        \begin{figure}
+            \gridline{
+                \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Co I.line-profiles-overlaidarms.pdf}{0.25\textwidth}{}
+                \fig{plots-updated/raw-ccfs/combined/KELT-20b.combined.Co..CCFs-raw.pdf}{0.25\textwidth}{\label{fig:raw-ccf-Co-combined}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Co.CCFs-shifted.pdf}{0.25\textwidth}{\label{fig:2d-ccf-Co-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Co.SNR-Gaussian.pdf}{0.25\textwidth}{\label{fig:1d-ccf-Co-blue}}
+            }
+            \gridline{
+                \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Cr I.line-profiles-overlaidarms.pdf}{0.25\textwidth}{}
+                \fig{plots-updated/raw-ccfs/combined/KELT-20b.combined.Cr..CCFs-raw.pdf}{0.25\textwidth}{\label{fig:raw-ccf-Cr-combined}}
+                \fig{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Cr.CCFs-shifted.pdf}{0.25\textwidth}{\label{fig:2d-ccf-Cr-combined}}
+                \fig{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Cr.SNR-Gaussian.pdf}{0.25\textwidth}{\label{fig:1d-ccf-Cr-combined}}
+            }
+            \gridline{
+                \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Cr II.line-profiles-overlaidarms.pdf}{0.25\textwidth}{}
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Cr+.blue.CCFs-raw.pdf}{0.25\textwidth}{\label{fig:raw-ccf-CrII-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Cr+.CCFs-shifted.pdf}{0.25\textwidth}{\label{fig:2d-ccf-CrII-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Cr+.SNR-Gaussian.pdf}{0.25\textwidth}{\label{fig:1d-ccf-CrII-blue}}
+            }
+            \gridline{
+                \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Zn I.line-profiles-overlaidarms.pdf}{0.25\textwidth}{}
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Zn.blue.CCFs-raw.pdf}{0.25\textwidth}{\label{fig:raw-ccf-Zn-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Zn.CCFs-shifted.pdf}{0.25\textwidth}{\label{fig:2d-ccf-Zn-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Zn.SNR-Gaussian.pdf}{0.25\textwidth}{\label{fig:1d-ccf-Zn-blue}}
+            }
+        \end{figure}
+        
+        \begin{figure}
+            \gridline{
+                \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Cu I.line-profiles-overlaidarms.pdf}{0.25\textwidth}{}
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Cu.blue.CCFs-raw.pdf}{0.25\textwidth}{\label{fig:raw-ccf-Cu-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Cu.CCFs-shifted.pdf}{0.25\textwidth}{\label{fig:2d-ccf-Cu-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Cu.SNR-Gaussian.pdf}{0.25\textwidth}{\label{fig:1d-ccf-Cu-blue}}
+            }
+            \gridline{
+                \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Ca I.line-profiles-overlaidarms.pdf}{0.25\textwidth}{}
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Ca.blue.CCFs-raw.pdf}{0.25\textwidth}{\label{fig:raw-ccf-Ca-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Ca.CCFs-shifted.pdf}{0.25\textwidth}{\label{fig:2d-ccf-Ca-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Ca.SNR-Gaussian.pdf}{0.25\textwidth}{\label{fig:1d-ccf-Ca-blue}}
+            }
+            \gridline{
+                \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Ti II.line-profiles-overlaidarms.pdf}{0.25\textwidth}{}
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Ti+.blue.CCFs-raw.pdf}{0.25\textwidth}{\label{fig:raw-ccf-TiII-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Ti+.CCFs-shifted.pdf}{0.25\textwidth}{\label{fig:2d-ccf-TiII-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Ti+.SNR-Gaussian.pdf}{0.25\textwidth}{\label{fig:1d-ccf-TiII-blue}}
+            }
+            \caption{Cross-correlation results for each detected and tentatively detected atomic species in our analysis. \textit{Left panel}: $K_p-RV$ maps in the stellar rest frame. \textit{Middle panel}: $K_p-\Delta V$ maps, shifted into the planetary rest frame. \textit{Right panel}: $SNR-\Delta V$ map at the $K_p$ corresponding to peak signal. This figure shows the maps, 1D CCFs, and line profiles for each species exceeding the ${3\sigma}$ tentative detection threshold. The offset of the center of the 1D CCF Gaussian from the planetary rest frame, ${v_{sys}}=0$, denotes the line velocity.}
+        \end{figure}
+        
+    \section{Dynamics}
     
-    \section{Line Profiles of Each Arm}
-
-         \begin{figure}
-         \label{fig:overlaid-arms-appendix}
-            \gridline{\fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Mg I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
-                      \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Fe I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
-                      \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Fe II.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}}
-            \gridline{\fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Na I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
-                      \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Co I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
-                      \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Cr I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}}
-            \gridline{\fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Cr II.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
-                      \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Zn I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
-                      \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Cu I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}}
-            \gridline{\fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Ca I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
-                      \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Ti I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
-                      \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Ti II.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}}
-        \end{figure}
-        
-        \begin{figure}
-            \gridline{
-                \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Sc II.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
-                \fig{plots-updated/line-profile-overlaidarms/KELT-20b.20190504.combined.Ru I.line-profiles-overlaidarms.pdf}{0.3\textwidth}{}
-            }
-            \caption{}
-            
-        \end{figure}
-        
-    \section{Raw CCFs}    
-    
-
-
-   \section{${K_p-\Delta\!V}$ Maps and 1D CCFs}
-
-        \begin{figure}
-            \label{fig: raw-ccfs-appendix}
-            \centering
-            \gridline{
-                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Mg.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
-                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Mg.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Mg-blue}}
-                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Mg.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Mg-blue}}
-            }
-            \gridline{
-                \fig{plots-updated/raw-ccfs/combined/KELT-20b.combined.Fe..CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
-                \fig{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Fe.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-combined}}
-                \fig{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Fe.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-combined}}
-            }
-            \gridline{
-                \fig{plots-updated/raw-ccfs/combined/KELT-20b.combined.Fe+..CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
-                \fig{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Fe+.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-combined}}
-                \fig{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Fe+.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-combined}}
-            }
-            \gridline{
-                \fig{plots-updated/raw-ccfs/combined/KELT-20b.combined.Na..CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
-                \fig{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Na.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-combined}}
-                \fig{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Na.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-combined}}
-            }
-            
-        \end{figure}
-        \begin{figure}
-            
-            \gridline{
-                \fig{plots-updated/raw-ccfs/combined/KELT-20b.combined.Co..CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
-                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Co.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-combined}}
-                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Co.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-combined}}
-            }
-            \gridline{
-                \fig{plots-updated/raw-ccfs/combined/KELT-20b.combined.Cr..CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
-                \fig{plots-updated/kp-vsys-map/combined/KELT-20b.20190504.combined.Cr.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-combined}}
-                \fig{plots-updated/line-profile/combined/KELT-20b.20190504.combined.Cr.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-combined}}
-            }
-            \gridline{
-                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Cr+.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
-                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Cr+.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
-                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Cr+.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
-            }
-            \gridline{
-                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Zn.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
-                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Zn.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
-                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Zn.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
-            }
-        \end{figure}
-        \begin{figure}
-            
-            \gridline{
-                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Cu.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
-                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Cu.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
-                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Cu.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
-            }
-            \gridline{
-                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Ca.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
-                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Ca.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
-                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Ca.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
-            }
-            \gridline{
-                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Ti.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
-                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Ti.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
-                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Ti.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
-            }
-
-        \end{figure}
-        \begin{figure}
-            \gridline{
-                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Sc+.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
-                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Sc+.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
-                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Sc+.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
-            }
-            \gridline{
-                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Ru.blue.CCFs-raw.pdf}{0.3\textwidth}{\label{fig:raw-ccf-Mg-blue}}
-                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Ru.CCFs-shifted.pdf}{0.3\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
-                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Ru.SNR-Gaussian.pdf}{0.3\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
-            }
-            \caption{Cross-correlation results for each detected and tentatively detected atomic species in our analysis. \textit{Left panel}: $K_p-RV$ maps in the stellar rest frame.
-            \textit{Middle panel}: $K_p-\Delta V$ maps, shifted into the planetary rest frame.
-            \textit{Left panel}: $SNR-\Delta V$ map at the $K_p$ corresponding to peak signal.
-            
-            
-            This figure shows the  maps, 1D CCFs, and line profiles for each species exceeding the ${3\sigma}$ tentative detection threshold. The offset of the center of the 1D CCF Gaussian from the planetary rest frame, ${v_{sys}}=0$, denotes the line velocity.}
-            \label{fig:Detections}
-        \end{figure}
-        
-        
-    \section{Line Dynamics}
-        \begin{figure}\label{fig:line-dynamics-appendix}
-            \centering
-            \gridline{
-                \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Mg.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
-                \fig{plots-updated/line-velocity/blue/KELT-20b.Mg.blue.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-Mg-blue}}
-            }
-            \gridline{
-                \fig{plots-updated/line-profile-asymmetries/combined/KELT-20b.20190504.combined.Fe.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
-                \fig{plots-updated/line-velocity/combined/KELT-20b.Fe.combined.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-Fe-combined}}
-            }
-            \gridline{
-                \fig{plots-updated/line-profile-asymmetries/combined/KELT-20b.20190504.combined.Fe+.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}     
-                \fig{plots-updated/line-velocity/combined/KELT-20b.Fe+.combined.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-FeII-combined}}
-            }
-            \gridline{                        
-                \fig{plots-updated/line-profile-asymmetries/combined/KELT-20b.20190504.combined.Cr.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
-                \fig{plots-updated/line-velocity/blue/KELT-20b.Cr.blue.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-CrI-combined}}
-            }
-
-        \end{figure}
         \begin{figure}
             \centering
             \gridline{
-                \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Cr+.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
-                \fig{plots-updated/line-velocity/blue/KELT-20b.Cr+.blue.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-Mg-blue}}
+                \fig{plots-updated/line-profile-asymmetries/ingress-egress/blue/KELT-20b.20190504.blue.Mg.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-profile-asymmetries/halves/blue/KELT-20b.20190504.blue.Mg.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-velocity/blue/KELT-20b.Mg.blue.phase-binned+RVs.pdf}{0.33\textwidth}{}
             }
             \gridline{
-                \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Co.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
-                \fig{plots-updated/line-velocity/blue/KELT-20b.Co.blue.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-Fe-blue}}
+                \fig{plots-updated/line-profile-asymmetries/ingress-egress/blue/KELT-20b.20190504.blue.Fe.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-profile-asymmetries/halves/blue/KELT-20b.20190504.blue.Fe.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-velocity/blue/KELT-20b.Fe.blue.phase-binned+RVs.pdf}{0.33\textwidth}{}
             }
             \gridline{
-                \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Zn.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}     
-                \fig{plots-updated/line-velocity/blue/KELT-20b.Zn.blue.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-FeII-blue}}
-            }
-            \gridline{                        
-                \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Ca.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
-                \fig{plots-updated/line-velocity/blue/KELT-20b.Ca.blue.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-CrI-blue}}
-            }
-         
-        \end{figure}
-        \begin{figure}
-            \centering
-           \gridline{                        
-                    \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Cu.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
-                    \fig{plots-updated/line-velocity/blue/KELT-20b.Cu.blue.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-CrI-blue}}
-                    }
-            \gridline{
-                \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Ti.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
-                \fig{plots-updated/line-velocity/blue/KELT-20b.Ti.blue.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-Mg-blue}}
+                \fig{plots-updated/line-profile-asymmetries/ingress-egress/blue/KELT-20b.20190504.blue.Fe+.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-profile-asymmetries/halves/blue/KELT-20b.20190504.blue.Fe+.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-velocity/blue/KELT-20b.Fe+.blue.phase-binned+RVs.pdf}{0.33\textwidth}{}
             }
             \gridline{
-                \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Sc+.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}     
-                \fig{plots-updated/line-velocity/blue/KELT-20b.Sc+.blue.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-FeII-blue}}
+                \fig{plots-updated/line-profile-asymmetries/ingress-egress/blue/KELT-20b.20190504.blue.Na.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-profile-asymmetries/halves/blue/KELT-20b.20190504.blue.Na.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-velocity/blue/KELT-20b.Na.blue.phase-binned+RVs.pdf}{0.33\textwidth}{}
             }
-         
 
         \end{figure}
         \begin{figure}
-            \centering
-           \gridline{                        
-                    \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Ru.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
-                    \fig{plots-updated/line-velocity/blue/KELT-20b.Ru.blue.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-CrI-blue}}
+            \gridline{
+                \fig{plots-updated/line-profile-asymmetries/ingress-egress/blue/KELT-20b.20190504.blue.Cr.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-profile-asymmetries/halves/blue/KELT-20b.20190504.blue.Cr.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-velocity/blue/KELT-20b.Cr.blue.phase-binned+RVs.pdf}{0.33\textwidth}{}
             }
             \gridline{
-                \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Mg.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
-                \fig{plots-updated/line-velocity/blue/KELT-20b.Mg.blue.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-Mg-blue}}
+                \fig{plots-updated/line-profile-asymmetries/ingress-egress/blue/KELT-20b.20190504.blue.Cr+.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-profile-asymmetries/halves/blue/KELT-20b.20190504.blue.Cr+.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-velocity/blue/KELT-20b.Cr+.blue.phase-binned+RVs.pdf}{0.33\textwidth}{}
             }
             \gridline{
-                \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Fe.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
-                \fig{plots-updated/line-velocity/blue/KELT-20b.Fe.blue.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-Fe-blue}}
+                \fig{plots-updated/line-profile-asymmetries/ingress-egress/blue/KELT-20b.20190504.blue.Co.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-profile-asymmetries/halves/blue/KELT-20b.20190504.blue.Co.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-velocity/blue/KELT-20b.Co.blue.phase-binned+RVs.pdf}{0.33\textwidth}{}
             }
             \gridline{
-                \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Fe+.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}     
-                \fig{plots-updated/line-velocity/blue/KELT-20b.Fe+.blue.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-FeII-blue}}
+                \fig{plots-updated/line-profile-asymmetries/ingress-egress/blue/KELT-20b.20190504.blue.Zn.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-profile-asymmetries/halves/blue/KELT-20b.20190504.blue.Zn.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-velocity/blue/KELT-20b.Zn.blue.phase-binned+RVs.pdf}{0.33\textwidth}{}
             }
 
         \end{figure}
-
         \begin{figure}
-            \centering
-            \gridline{                        
-                \fig{plots-updated/line-profile-asymmetries/blue/KELT-20b.20190504.blue.Cr.SNR-Gaussian-Asymmetry.pdf}{0.3\textwidth}{}
-                \fig{plots-updated/line-velocity/blue/KELT-20b.Cr.blue.phase-binned+RVs.pdf}{0.3\textwidth}{\label{fig:wind-chars-CrI-blue}}
+            \gridline{
+                \fig{plots-updated/line-profile-asymmetries/ingress-egress/blue/KELT-20b.20190504.blue.Ca.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-profile-asymmetries/halves/blue/KELT-20b.20190504.blue.Ca.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-velocity/blue/KELT-20b.Ca.blue.phase-binned+RVs.pdf}{0.33\textwidth}{}
             }
-
+            \gridline{
+                \fig{plots-updated/line-profile-asymmetries/ingress-egress/blue/KELT-20b.20190504.blue.Cu.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-profile-asymmetries/halves/blue/KELT-20b.20190504.blue.Cu.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-velocity/blue/KELT-20b.Cu.blue.phase-binned+RVs.pdf}{0.33\textwidth}{}
+            }
+            \gridline{
+                \fig{plots-updated/line-profile-asymmetries/ingress-egress/blue/KELT-20b.20190504.blue.Ti+.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-profile-asymmetries/halves/blue/KELT-20b.20190504.blue.Ti+.SNR-Gaussian-Asymmetry.pdf}{0.33\textwidth}{}
+                \fig{plots-updated/line-velocity/blue/KELT-20b.Ti+.blue.phase-binned+RVs.pdf}{0.25\textwidth}{}
+            }
+            \caption{Phase-binned radial velocity measurements}
+            \label{fig:phase-binned+RVs-results}
         \end{figure}
-            
         
         \begin{figure}[]\label{fig:combined-line-profiles-appendix} 
             \includegraphics[width=0.45\textwidth]{plots-updated/KELT-20b.inverted-transmission-better.CombinedRVs.pdf}
             \caption{The net Doppler shifts of each detected species, ordered and colored by their peak detection SNR.}
             
         \end{figure}
+
+
+
+    \section{Nondetections}
+        \begin{figure}
+            
+            \gridline{
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Ru.blue.CCFs-raw.pdf}{0.25\textwidth}{\label{fig:raw-ccf-Mg-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Ru.CCFs-shifted.pdf}{0.25\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Ru.SNR-Gaussian.pdf}{0.25\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
+            }
+            \gridline{
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Ti.blue.CCFs-raw.pdf}{0.25\textwidth}{\label{fig:raw-ccf-Mg-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Ti.CCFs-shifted.pdf}{0.25\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Ti.SNR-Gaussian.pdf}{0.25\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
+            }
+            \gridline{
+                \fig{plots-updated/raw-ccfs/blue/KELT-20b.20190504.Sc+.blue.CCFs-raw.pdf}{0.25\textwidth}{\label{fig:raw-ccf-Mg-blue}}
+                \fig{plots-updated/kp-vsys-map/blue/KELT-20b.20190504.blue.Sc+.CCFs-shifted.pdf}{0.25\textwidth}{\label{fig:2d-ccf-Fe+-blue}}
+                \fig{plots-updated/line-profile/blue/KELT-20b.20190504.blue.Sc+.SNR-Gaussian.pdf}{0.25\textwidth}{\label{fig:1d-ccf-Fe+-blue}}
+            }
+            
+             \caption{Cross-correlation results for each detected and tentatively detected atomic species in our analysis. \textit{Left panel}: $K_p-RV$ maps in the stellar rest frame. \textit{Middle panel}: $K_p-\Delta V$ maps, shifted into the planetary rest frame.
+                            \textit{Left panel}: $SNR-\Delta V$ map at the $K_p$ corresponding to peak signal. This figure shows the  maps, 1D CCFs, and line profiles for each species exceeding the ${3\sigma}$ tentative detection threshold. The offset of the center of the 1D CCF Gaussian from the planetary rest frame, ${v_{sys}}=0$, denotes the line velocity.}
+        \end{figure}
+
+
+
+
 \bibliography{bibliography}{}
 \bibliographystyle{aasjournal}       
     \clearpage
